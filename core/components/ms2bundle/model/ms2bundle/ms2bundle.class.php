@@ -5,7 +5,7 @@ class ms2Bundle
     const PACKAGE = 'ms2bundle';
 
     const HANDLERS = [
-        'mgr' => [],
+        'mgr' => ['mgrLayoutHandler'],
         'default' => []
     ];
 
@@ -21,17 +21,8 @@ class ms2Bundle
     /** @var pdoFetch */
     public $pdoTools;
 
-    /** @var checkoutHandler */
-    public $checkoutHandler;
-
-    /** @var orderHandler */
-    public $orderHandler;
-
-    /** @var userHandler */
-    public $userHandler;
-
     /**
-     * ms2Bonus constructor.
+     * ms2Bundle constructor.
      * @param modX $modx
      * @param array $config
      */
@@ -95,14 +86,14 @@ class ms2Bundle
      * @param array $placeholders
      * @return array
      */
-    public function success($message = '', $data = [], $placeholders = [])
+    /*public function success($message = '', $data = [], $placeholders = [])
     {
         return [
             'success' => true,
             'message' => $this->getLexiconTopic($message, $placeholders),
             'data' => $data
         ];
-    }
+    }*/
 
     /**
      * @param string $message
@@ -110,24 +101,24 @@ class ms2Bundle
      * @param array $placeholders
      * @return array
      */
-    public function error($message = '', $data = [], $placeholders = [])
+    /*public function error($message = '', $data = [], $placeholders = [])
     {
         return [
             'success' => false,
             'message' => $this->getLexiconTopic($message, $placeholders),
             'data' => $data
         ];
-    }
+    }*/
 
     /**
      * @param string $key
      * @param array $placeholders
      * @return string
      */
-    public function getLexiconTopic($key = '', $placeholders = [])
+    /*public function getLexiconTopic($key = '', $placeholders = [])
     {
         return $this->modx->lexicon(self::PACKAGE . '.' . $key, $placeholders);
-    }
+    }*/
 
     /**
      * @param string $ctx
@@ -138,9 +129,10 @@ class ms2Bundle
         $handlers = self::HANDLERS[$ctx] ?? self::HANDLERS['default'];
         foreach ($handlers as $className) {
             require_once $this->config['handlersPath'] . mb_strtolower($className) . '.class.php';
-            $this->$className = new $className($this, $this->config);
-            if (!($this->$className instanceof $className)) {
-                $this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not initialize ' . $className . ' class');
+            $classNamespace = get_class($this) . '\Handlers\\' . $className;
+            $this->$className = new $classNamespace($this, $this->config);
+            if (!($this->$className instanceof $classNamespace)) {
+                $this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not initialize ' . $classNamespace . ' class');
                 return false;
             }
         }
@@ -150,17 +142,11 @@ class ms2Bundle
     /**
      * @return bool
      */
-    private function initializeBackend()
+    public function initializeBackend()
     {
         //Add JS and CSS
-        if ($this->modx->controller) {
-            $this->modx->controller->addHtml('
-                <script type="text/javascript">
-                    ms2Extend = {};
-                    ms2Extend.config = ' . $this->modx->toJSON($this->config) . ';
-                </script>'
-            );
-        }
+        $configJs = $this->modx->toJSON($this->config);
+        $this->modx->regClientStartupScript('<script type="text/javascript">ms2Bundle = ' . $configJs . ';</script>', true);
         return true;
     }
 

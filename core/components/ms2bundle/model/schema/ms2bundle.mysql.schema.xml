@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="ms2bundle" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM">
+    <object class="ms2bundleGroup" table="ms2bundle_groups" extends="xPDOSimpleObject">
+        <!--Data-->
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="description" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <!--<field key="template_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>-->
+        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1"/>
+        <!--Links-->
+        <composite alias="Templates" class="ms2bundleGroupTemplate" local="id" foreign="group_id" cardinality="many" owner="local"/>
+        <composite alias="Ingredients" class="ms2bundleIngredient" local="id" foreign="group_id" cardinality="many" owner="local"/>
+    </object>
+
+    <object class="ms2bundleGroupTemplate" table="ms2bundle_group_templates" extends="xPDOObject">
+        <!--Data-->
+        <field key="group_id" dbtype="int" precision="10" phptype="integer" null="false" attributes="unsigned" index="pk" />
+        <field key="template_id" dbtype="int" precision="10" phptype="integer" null="false" attributes="unsigned" index="pk" />
+        <!--Links-->
+        <aggregate alias="Group" class="ms2bundleGroup" local="group_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Template" class="modTemplate" local="template_id" foreign="id" cardinality="one" owner="foreign" />
+        <!--Indexes-->
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
+            <column key="group_id" length="" collation="A" null="false" />
+            <column key="template_id" length="" collation="A" null="false" />
+        </index>
+    </object>
+
+    <object class="ms2bundleIngredient" table="ms2bundle_ingredients" extends="xPDOSimpleObject">
+        <!--Data-->
+        <field key="group_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="description" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="image" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="price" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
+        <field key="weight" dbtype="decimal" precision="13,3" phptype="float" default="0"/>
+        <field key="by_default" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="0"/>
+        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1"/>
+        <!--Custom Data-->
+        <field key="proteins" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
+        <field key="fats" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
+        <field key="carbohydrates" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
+        <field key="calories" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
+        <!--Indexes-->
+        <index alias="group_id" name="group_id" primary="false" unique="false" type="BTREE">
+            <column key="group_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="price" name="price" primary="false" unique="false" type="BTREE">
+            <column key="price" length="" collation="A" null="false"/>
+        </index>
+        <!--Links-->
+        <aggregate alias="Group" class="ms2bundleGroup" local="group_id" foreign="id" cardinality="one" owner="foreign"/>
+        <composite alias="Products" class="ms2bundleProductIngredient" local="id" foreign="ingredient_id" cardinality="many" owner="local"/>
+    </object>
+
+    <object class="ms2bundleProductIngredient" table="ms2bundle_product_ingredients" extends="xPDOObject">
+        <!--Data-->
+        <field key="product_id" dbtype="int" precision="10" phptype="integer" null="false" attributes="unsigned" index="pk"/>
+        <field key="ingredient_id" dbtype="int" precision="10" phptype="integer" null="false" attributes="unsigned" index="pk"/>
+        <!--Indexes-->
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
+            <column key="product_id" length="" collation="A" null="false"/>
+            <column key="ingredient_id" length="" collation="A" null="false"/>
+        </index>
+        <!--Links-->
+        <aggregate alias="Product" class="msProduct" local="product_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Ingredient" class="ms2bundleIngredient" local="ingredient_id" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
+</model>

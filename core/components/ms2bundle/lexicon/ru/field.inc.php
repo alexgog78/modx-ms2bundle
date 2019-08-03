@@ -1,0 +1,23 @@
+<?php
+$_lang['ms2bundle.field.name'] = 'Название';
+$_lang['ms2bundle.field.description'] = 'Описание';
+$_lang['ms2bundle.field.active'] = 'Активный';
+$_lang['ms2bundle.field.blocked'] = 'Заблокирован';
+$_lang['ms2bundle.field.comment'] = 'Комментарий';
+$_lang['ms2bundle.field.createdon'] = 'Дата создания';
+$_lang['ms2bundle.field.updatedon'] = 'Дата изменения';
+$_lang['ms2bundle.field.content'] = 'Контент';
+$_lang['ms2bundle.field.code'] = 'Код';
+$_lang['ms2bundle.field.undefined'] = '<span class="icon icon-lock" style="font-size:200%;"></span><br />Для начала сохраните объект';
+$_lang['ms2bundle.field.indevelopment'] = '<span class="icon icon-cog" style="font-size:200%;"></span><br />Раздел находится в разработке';
+$_lang['ms2bundle.field.group'] = 'Группа';
+$_lang['ms2bundle.field.description'] = 'Описание';
+$_lang['ms2bundle.field.templates'] = 'Шаблоны товара';
+$_lang['ms2bundle.field.image'] = 'Изображение';
+$_lang['ms2bundle.field.price'] = 'Цена';
+$_lang['ms2bundle.field.weight'] = 'Вес';
+$_lang['ms2bundle.field.by_default'] = 'Включено по умолчанию';
+$_lang['ms2bundle.field.proteins'] = 'Белки';
+$_lang['ms2bundle.field.fats'] = 'Жиры';
+$_lang['ms2bundle.field.carbohydrates'] = 'Углеводы';
+$_lang['ms2bundle.field.calories'] = 'Калории';
