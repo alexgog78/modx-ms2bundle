@@ -1,8 +1,8 @@
 <?php
 
-require_once MODX_CORE_PATH . 'components/ms2bundle/processors/mgr/abstract/object/getlist.class.php';
+require_once MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/getlist.class.php';
 
-class ms2bundleGroupGetListProcessor extends ms2bundleGetListProcessor
+class ms2bundleGroupGetListProcessor extends amObjectGetListProcessor
 {
     /** @var string */
     public $classKey = 'ms2bundleGroup';
@@ -14,9 +14,9 @@ class ms2bundleGroupGetListProcessor extends ms2bundleGetListProcessor
      */
     public function searchQuery(xPDOQuery $c, $query)
     {
-        $c->where(array(
+        $c->where([
             'name:LIKE' => '%' . $query . '%'
-        ));
+        ]);
         return $c;
     }
 }

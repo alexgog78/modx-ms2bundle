@@ -1,8 +1,8 @@
 <?php
 
-require_once MODX_CORE_PATH . 'components/ms2bundle/processors/mgr/abstract/object/update.class.php';
+require_once MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/update.class.php';
 
-class ms2bundleGroupUpdateProcessor extends ms2bundleUpdateProcessor
+class ms2bundleGroupUpdateProcessor extends amObjectUpdateProcessor
 {
     /** @var string */
     public $classKey = 'ms2bundleGroup';
@@ -38,9 +38,9 @@ class ms2bundleGroupUpdateProcessor extends ms2bundleUpdateProcessor
                 continue;
             }
             $template = $this->modx->newObject('ms2bundleGroupTemplate');
-            $template->fromArray(array(
+            $template->fromArray([
                 'template_id' => $item
-            ), '', true);
+            ], '', true);
             $this->templates[] = $template;
         }
 

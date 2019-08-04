@@ -14,7 +14,7 @@ $modx->lexicon->load('minishop2:default', 'minishop2:manager');
 $path = $modx->getOption('processorsPath', $ms2Bundle->config, MODX_CORE_PATH . 'components/ms2bundle/processors/');
 /** @var modConnectorRequest $request */
 $request = $modx->request;
-$request->handleRequest(array(
+$request->handleRequest([
     'processors_path' => $path,
     'location' => ''
-));
+]);

@@ -1,8 +1,8 @@
 <?php
 
-require_once MODX_CORE_PATH . 'components/ms2bundle/processors/mgr/abstract/object/create.class.php';
+require_once MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/create.class.php';
 
-class ms2bundleGroupCreateProcessor extends ms2bundleCreateProcessor
+class ms2bundleGroupCreateProcessor extends amObjectCreateProcessor
 {
     /** @var string */
     public $classKey = 'ms2bundleGroup';
@@ -25,9 +25,9 @@ class ms2bundleGroupCreateProcessor extends ms2bundleCreateProcessor
         }
         foreach ($data as $item) {
             $template = $this->modx->newObject('ms2bundleGroupTemplate');
-            $template->fromArray(array(
+            $template->fromArray([
                 'template_id' => $item
-            ), '', true);
+            ], '', true);
             $this->templates[] = $template;
         }
         $this->object->addMany($this->templates, 'Templates');

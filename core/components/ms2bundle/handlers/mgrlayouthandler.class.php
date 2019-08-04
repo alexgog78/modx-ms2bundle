@@ -8,17 +8,17 @@ class mgrLayoutHandler
     private $ms2Bundle;
 
     /** @var array */
-    private $config = array();
+    private $config = [];
 
     /** @var modX */
     private $modx;
 
     /**
-     * ms2extMgrLayoutHandler constructor.
-     * @param ms2Extend $ms2Extend
+     * mgrLayoutHandler constructor.
+     * @param \ms2Bundle $ms2Bundle
      * @param array $config
      */
-    function __construct(\ms2Bundle & $ms2Bundle, array $config = array())
+    function __construct(\ms2Bundle & $ms2Bundle, array $config = [])
     {
         $this->ms2bundle = &$ms2Bundle;
         $this->config = $config;

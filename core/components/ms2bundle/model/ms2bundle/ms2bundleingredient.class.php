@@ -1,6 +1,8 @@
 <?php
 
-class ms2bundleIngredient extends xPDOSimpleObject
+require_once MODX_CORE_PATH . 'components/abstractmodule/model/abstractmodule/amsimpleobject.class.php';
+
+class ms2bundleIngredient extends amSimpleObject
 {
     const REQUIRED_FIELDS = [
         'group_id',

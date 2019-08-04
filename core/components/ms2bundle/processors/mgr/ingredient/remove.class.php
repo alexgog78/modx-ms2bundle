@@ -1,8 +1,8 @@
 <?php
 
-require_once MODX_CORE_PATH . 'components/ms2bundle/processors/mgr/abstract/object/remove.class.php';
+require_once MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/remove.class.php';
 
-class ms2bundleIngredientRemoveProcessor extends ms2bundleRemoveProcessor
+class ms2bundleIngredientRemoveProcessor extends amObjectRemoveProcessor
 {
     /** @var string */
     public $classKey = 'ms2bundleIngredient';

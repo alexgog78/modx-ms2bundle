@@ -116,7 +116,7 @@ Ext.extend(ms2Bundle.panel.group, MODx.FormPanel, {
                             fontSize: '170%',
                             textAlign: 'center'
                         }
-                    } : {xtype: 'ms2bundle-grid-ingredients', group_id: config.record_id, anchor: '100%'}
+                    } : {xtype: 'ms2bundle-grid-group-ingredients', group_id: config.record_id, anchor: '100%'}
                 ]
             }]
         });
@@ -154,7 +154,7 @@ Ext.extend(ms2Bundle.panel.group, MODx.FormPanel, {
                     },
                     items: [
                         {xtype: 'xcheckbox', name: 'active', boxLabel: _('ms2bundle.field.active'), inputValue: 1, checked: (config.record_id === '' || config.record_id === 0) ? true : false},
-                        {xtype: 'ms2bundle-combo-templates', name: 'template_ids', fieldLabel: _('ms2bundle.field.template'), anchor: '100%', id:'templates-multiselect'}
+                        {xtype: 'ms2bundle-combo-templates', name: 'template_ids', fieldLabel: _('ms2bundle.field.templates'), anchor: '100%', id:'templates-multiselect'}
                     ]
                 }]
             }

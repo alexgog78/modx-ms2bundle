@@ -10,7 +10,7 @@ abstract class ms2BundleManagerController extends modExtraManagerController
      */
     public function getLanguageTopics()
     {
-        return array('ms2bundle:default');
+        return ['ms2bundle:default'];
     }
 
     public function initialize()

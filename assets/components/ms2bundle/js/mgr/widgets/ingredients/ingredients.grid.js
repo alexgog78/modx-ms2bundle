@@ -6,7 +6,7 @@ ms2Bundle.grid.ingredients = function (config) {
         url: ms2Bundle.config.connectorUrl,
         baseParams: {
             action: 'mgr/ingredient/getlist',
-            group_id: config.group_id
+            //group_id: config.group_id
         },
         paging: true,
         remoteSort: true,
@@ -78,7 +78,7 @@ ms2Bundle.grid.ingredients = function (config) {
                     action: 'mgr/ingredient/create',
                     fields: this.getFields(),
                     defaults: {
-                        group_id: config.group_id,
+                        //group_id: config.group_id,
                         by_default: false,
                         active: true
                     }

@@ -1,8 +1,8 @@
 <?php
 
-require_once MODX_CORE_PATH . 'components/ms2bundle/processors/mgr/abstract/object/create.class.php';
+require_once MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/create.class.php';
 
-class ms2bundleIngredientCreateProcessor extends ms2bundleCreateProcessor
+class ms2bundleIngredientCreateProcessor extends amObjectCreateProcessor
 {
     /** @var string */
     public $classKey = 'ms2bundleIngredient';
