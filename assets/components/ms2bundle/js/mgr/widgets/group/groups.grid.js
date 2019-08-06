@@ -1,5 +1,9 @@
 ms2Bundle.grid.groups = function (config) {
     config = config || {};
+    if (!config.id) {
+        config.id = 'ms2bundle-grid-groups';
+    }
+
     Ext.applyIf(config, {
         //Settings
         id: 'ms2bundle-grid-groups',
@@ -33,7 +37,7 @@ ms2Bundle.grid.groups = function (config) {
             //Search panel
             {
                 xtype: 'textfield',
-                id: 'ms2bundle-groups-search-filter',
+                id: config.id + '-search-filter',
                 emptyText: _('ms2bundle.controls.search'),
                 listeners: {
                     'change': {fn: ms2Bundle.function.search, scope: this},

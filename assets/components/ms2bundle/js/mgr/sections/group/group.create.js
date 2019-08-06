@@ -9,7 +9,7 @@ ms2Bundle.page.groupCreate = function (config) {
     console.log(config);
     Ext.applyIf(config, {
         url: ms2Bundle.config.connectorUrl,
-        formpanel: 'ms2bundle-panel-group',
+        formpanel: 'ms2bundle-formpanel-group',
         buttons: [{
             text: _('ms2bundle.controls.save'),
             process: 'mgr/group/create',
@@ -27,7 +27,7 @@ ms2Bundle.page.groupCreate = function (config) {
             }
         }],
         components: [{
-            xtype: 'ms2bundle-panel-group',
+            xtype: 'ms2bundle-formpanel-group',
             renderTo: 'modx-panel-holder',
             record_id: 0
         }]

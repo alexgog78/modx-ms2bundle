@@ -10,6 +10,22 @@ Ext.extend(ms2Bundle.window.recordWindow, MODx.Window);
 Ext.reg('ms2bundle-window-record', ms2Bundle.window.recordWindow);
 
 
+/*ms2Bundle.combo.zzz = function(config) {
+    config = config || {};
+    Ext.applyIf(config, {
+        html: _('ms2bundle.field.undefined'),
+        cls: 'panel-desc',
+        style: {
+            fontSize: '170%',
+            textAlign: 'center'
+        }
+    });
+    ms2Bundle.combo.zzz.superclass.constructor.call(this,config);
+};
+//Ext.extend(ms2Bundle.combo.zzz, Ext.panel);
+Ext.reg('ms2bundle-combo-undefined', ms2Bundle.combo.zzz);*/
+
+
 ms2Bundle.combo.groupSelect = function(config) {
     config = config || {};
     Ext.applyIf(config, {
@@ -146,7 +162,7 @@ Ext.extend(ms2Bundle.combo.Browser, Ext.form.TriggerField,{
         return true;
     }
     ,onDestroy: function(){
-        PortComfort.combo.Browser.superclass.onDestroy.call(this);
+        ms2Bundle.combo.Browser.superclass.onDestroy.call(this);
     }
     ,getPath: function(n) {
         if (n.id == '/') {return '';}

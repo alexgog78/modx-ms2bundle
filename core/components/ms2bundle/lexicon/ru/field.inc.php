@@ -13,6 +13,8 @@ $_lang['ms2bundle.field.indevelopment'] = '<span class="icon icon-cog" style="fo
 $_lang['ms2bundle.field.group'] = 'Группа';
 $_lang['ms2bundle.field.description'] = 'Описание';
 $_lang['ms2bundle.field.templates'] = 'Шаблоны товара';
+$_lang['ms2bundle.field.ingredients_min'] = 'Минимальное количество ингредиентов';
+$_lang['ms2bundle.field.ingredients_max'] = 'Максимальное количество ингредиентов';
 $_lang['ms2bundle.field.image'] = 'Изображение';
 $_lang['ms2bundle.field.price'] = 'Цена';
 $_lang['ms2bundle.field.weight'] = 'Вес';

@@ -12,6 +12,8 @@ $xpdo_meta_map['ms2bundleGroup'] = array(
         array(
             'name' => NULL,
             'description' => NULL,
+            'ingredients_min' => NULL,
+            'ingredients_max' => NULL,
             'active' => 1,
         ),
     'fieldMeta' =>
@@ -28,6 +30,22 @@ $xpdo_meta_map['ms2bundleGroup'] = array(
                     'dbtype' => 'varchar',
                     'precision' => '255',
                     'phptype' => 'string',
+                    'null' => true,
+                ),
+            'ingredients_min' =>
+                array(
+                    'dbtype' => 'int',
+                    'precision' => '10',
+                    'attributes' => 'unsigned',
+                    'phptype' => 'integer',
+                    'null' => true,
+                ),
+            'ingredients_max' =>
+                array(
+                    'dbtype' => 'int',
+                    'precision' => '10',
+                    'attributes' => 'unsigned',
+                    'phptype' => 'integer',
                     'null' => true,
                 ),
             'active' =>

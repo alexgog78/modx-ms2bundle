@@ -1,57 +1,44 @@
-ms2Bundle.panel.group = function (config) {
+ms2Bundle.formPanel.group = function (config) {
     config = config || {};
+    if (!config.id) {
+        config.id = 'ms2bundle-formpanel-group';
+    }
     Ext.apply(config, {
         url: ms2Bundle.config.connectorUrl,
-        baseParams: {},
-        border: false,
-        id: 'ms2bundle-panel-group',
-        baseCls: 'modx-formpanel',
-        cls: 'container',
-        useLoadingMask: true,
-        items: [{
-            html: '<h2>' + _('ms2bundle.section.group') + '</h2>',
-            border: false,
-            cls: 'modx-page-header',
-            id: 'ms2bundle-panel-group-header'
-        }, {
-            xtype: 'modx-tabs',
-            defaults: {
-                autoHeight: true,
-                layout: 'form',
-                labelWidth: 150,
-                msgTarget: 'under',
-                bodyCssClass: 'tab-panel-wrapper',
-                layoutOnTabChange: true
-            },
-            items: this.getTabs(config)
-        }],
-        listeners: {
-            'setup': {fn: this.setup, scope: this},
-            'success': {fn: this.success, scope: this},
-            //'failure': {fn:this.failure, scope:this},
-            'beforeSubmit': {fn: this.beforeSubmit, scope: this},
-            //'fieldChange': {fn:this.onFieldChange, scope:this},
-            //'failureSubmit': {fn:this.failureSubmit, scope:this}
-        }
+        title: _('ms2bundle.section.group')
     });
-    ms2Bundle.panel.group.superclass.constructor.call(this, config);
+    ms2Bundle.formPanel.group.superclass.constructor.call(this, config);
 };
-Ext.extend(ms2Bundle.panel.group, MODx.FormPanel, {
+Ext.extend(ms2Bundle.formPanel.group, abstractModule.formPanel, {
+    formInputs: {
+        id: {xtype: 'hidden'},
+        name: {xtype: 'textfield', fieldLabel: _('ms2bundle.field.name')},
+        description: {xtype: 'textarea', fieldLabel: _('ms2bundle.field.description'), height: 170},
+        ingredients_min: {xtype: 'numberfield', fieldLabel: _('ms2bundle.field.ingredients_min'), decimalPrecision: 0},
+        ingredients_max: {xtype: 'numberfield', fieldLabel: _('ms2bundle.field.ingredients_max'), decimalPrecision: 0},
+        active: {xtype: 'combo-boolean', fieldLabel: _('ms2bundle.field.active'), value: 1},
+        template_ids: {xtype: 'ms2bundle-combo-templates', fieldLabel: _('ms2bundle.field.templates')}
+    },
+
+    getPanelTabs: function (config) {
+        var mainPanel = this.getPanelTab(
+            _('ms2bundle.tab.group'),
+            _('ms2bundle.tab.group.management'),
+            this.getMainPanel(config)
+        );
+        var ingredientsPanel = this.getPanelTab(
+            _('ms2bundle.tab.ingredients'),
+            _('ms2bundle.tab.ingredients.management'),
+            this.getIngredientsPanel(config)
+        );
+        return [mainPanel, ingredientsPanel];
+    },
+
     setup: function () {
         if (this.config.record_id === '' || this.config.record_id === 0) {
             this.fireEvent('ready');
             return false;
         }
-
-
-        /*this.fireEvent('ready');
-        this.initialized = true;
-
-        MODx.fireEvent('ready');
-        //MODx.sleep(4);
-        //if (MODx.afterTVLoad) { MODx.afterTVLoad(); }
-        this.fireEvent('load');*/
-
         MODx.Ajax.request({
             url: this.config.url,
             params: {
@@ -65,21 +52,17 @@ Ext.extend(ms2Bundle.panel.group, MODx.FormPanel, {
                         this.getForm().setValues(response.object);
 
                         //Templates input
-                        var templatesIds = response.object['template_ids'];
+                        var templates = response.object['templates'];
                         var templatesInput = Ext.getCmp('templates-multiselect');
-                        templatesInput.setValue(templatesIds);
+                        templatesInput.setValueEx(templates)
 
-                        Ext.get('ms2bundle-panel-group-header').update('<h2>' + _('ms2bundle.section.group') + ': ' + response.object.name + '</h2>');
-                        this.fireEvent('ready', response.object);
+                        Ext.get(this.config.id + '-header').update('<h2>' + _('ms2bundle.section.group') + ': ' + response.object.name + '</h2>');
+                        //this.fireEvent('ready', response.object);
                         MODx.fireEvent('ready');
                     }, scope: this
                 }
             }
         });
-    },
-
-    beforeSubmit: function (o) {
-
     },
 
     success: function (o) {
@@ -88,78 +71,106 @@ Ext.extend(ms2Bundle.panel.group, MODx.FormPanel, {
         }
     },
 
-    getTabs: function (config) {
-        var tabs = [];
-        tabs.push({
-            title: _('ms2bundle.tab.group'),
-            items: [{
-                html: '<p>' + _('ms2bundle.tab.group.management') + '</p>',
-                bodyCssClass: 'panel-desc'
-            }, {
-                cls: 'main-wrapper form-with-labels',
-                labelAlign: 'top',
-                items: this.getMainPanel(config)
-            }]
-        }, {
-            title: _('ms2bundle.tab.ingridients')
-            , items: [{
-                html: '<p>' + _('ms2bundle.tab.ingridients.management') + '</p>',
-                bodyCssClass: 'panel-desc'
-            }, {
-                cls: 'main-wrapper form-with-labels',
-                labelAlign: 'top',
-                items: [
-                    (config.record_id === '' || config.record_id === 0) ? {
-                        html: _('ms2bundle.field.undefined'),
-                        cls: 'panel-desc',
-                        style: {
-                            fontSize: '170%',
-                            textAlign: 'center'
-                        }
-                    } : {xtype: 'ms2bundle-grid-group-ingredients', group_id: config.record_id, anchor: '100%'}
-                ]
-            }]
-        });
-        return tabs;
-    },
-
     getMainPanel: function (config) {
-        var panel = [];
-        panel.push(
-            {xtype: 'hidden', name: 'id'},
+        return [
+            this.getFormInput('id'),
             {
                 layout: 'column',
-                defaults: {
-                    layout: 'form',
-                    labelAlign: 'top',
-                    labelSeparator: '',
-                    border: false
-                },
-                style: 'margin-bottom:25px;',
                 items: [{
                     columnWidth: 0.5,
                     defaults: {
-                        msgTarget: 'under',
-                        anchor: '100%'
+                        layout: 'column'
                     },
-                    items: [
-                        {xtype: 'textfield', name: 'name', fieldLabel: _('ms2bundle.field.name'), anchor: '100%'},
-                        {xtype: 'textarea', name: 'description', fieldLabel: _('ms2bundle.field.description'), anchor: '100%', height: 101}
-                    ]
+                    items: [{
+                        defaults: {
+                            layout: 'form'
+                        },
+                        items: [{
+                            columnWidth: 0.5,
+                            defaults: {
+                                msgTarget: 'under',
+                                anchor: '100%'
+                            },
+                            items: [
+                                this.getFormInput('name')
+                            ]
+                        }, {
+                            columnWidth: 0.5,
+                            defaults: {
+                                msgTarget: 'under',
+                                anchor: '100%'
+                            },
+                            items: [
+                                this.getFormInput('active')
+                            ]
+                        }]
+                    }, {
+                        defaults: {
+                            layout: 'form'
+                        },
+                        items: [{
+                            columnWidth: 1,
+                            defaults: {
+                                msgTarget: 'under',
+                                anchor: '100%'
+                            },
+                            items: [
+                                this.getFormInput('template_ids', {id: 'templates-multiselect'})
+                            ]
+                        }]
+                    }, {
+                        defaults: {
+                            layout: 'form'
+                        },
+                        items: [{
+                            columnWidth: 0.5,
+                            defaults: {
+                                msgTarget: 'under',
+                                anchor: '100%'
+                            },
+                            items: [
+                                this.getFormInput('ingredients_min')
+                            ]
+                        }, {
+                            columnWidth: 0.5,
+                            defaults: {
+                                msgTarget: 'under',
+                                anchor: '100%'
+                            },
+                            items: [
+                                this.getFormInput('ingredients_max')
+                            ]
+                        }]
+                    }]
                 }, {
                     columnWidth: 0.5,
+                    layout: 'form',
                     defaults: {
                         msgTarget: 'under',
                         anchor: '100%'
                     },
                     items: [
-                        {xtype: 'xcheckbox', name: 'active', boxLabel: _('ms2bundle.field.active'), inputValue: 1, checked: (config.record_id === '' || config.record_id === 0) ? true : false},
-                        {xtype: 'ms2bundle-combo-templates', name: 'template_ids', fieldLabel: _('ms2bundle.field.templates'), anchor: '100%', id:'templates-multiselect'}
+                        this.getFormInput('description')
                     ]
                 }]
             }
-        );
+        ];
+    },
+
+    getIngredientsPanel: function (config) {
+        var panel = [];
+        panel.push((config.record_id === '' || config.record_id === 0) ? {
+            html: _('ms2bundle.field.undefined'),
+            cls: 'panel-desc',
+            style: {
+                fontSize: '170%',
+                textAlign: 'center'
+            }
+        } : {xtype: 'ms2bundle-grid-group-ingredients', group_id: config.record_id, anchor: '100%'});
+        /*var panel = [
+            {xtype: 'ms2bundle-combo-undefined'}
+        ];*/
         return panel;
     }
 });
-Ext.reg('ms2bundle-panel-group', ms2Bundle.panel.group);
+Ext.reg('ms2bundle-formpanel-group', ms2Bundle.formPanel.group);

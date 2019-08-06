@@ -1,8 +1,11 @@
 ms2Bundle.grid.ingredients = function (config) {
     config = config || {};
+    if (!config.id) {
+        config.id = 'ms2bundle-grid-ingredients';
+    }
+
     Ext.applyIf(config, {
         //Settings
-        id: 'ms2bundle-grid-ingredients',
         url: ms2Bundle.config.connectorUrl,
         baseParams: {
             action: 'mgr/ingredient/getlist',
@@ -49,7 +52,7 @@ ms2Bundle.grid.ingredients = function (config) {
             //Search panel
             {
                 xtype: 'textfield',
-                id: 'ms2bundle-ingredients-search-filter',
+                id: config.id + '-search-filter',
                 emptyText: _('ms2bundle.controls.search'),
                 listeners: {
                     'change': {fn: ms2Bundle.function.search, scope: this},
@@ -140,7 +143,7 @@ Ext.extend(ms2Bundle.grid.ingredients, MODx.grid.Grid, {
                 }
                 ,deferredRender: false
                 ,items: [{
-                    title: _('ms2bundle.tab.ingridients.general')
+                    title: _('ms2bundle.tab.ingredients.general')
                     ,layout: 'form'
                     ,items: [
                         //{xtype: 'ms2bundle-combo-group', name: 'group_id', fieldLabel: _('ms2bundle.field.group'), anchor: '100%', readOnly: true},
@@ -169,7 +172,7 @@ Ext.extend(ms2Bundle.grid.ingredients, MODx.grid.Grid, {
                         }
                     ]
                 },{
-                    title: _('ms2bundle.tab.ingridients.custom')
+                    title: _('ms2bundle.tab.ingredients.custom')
                     ,layout: 'form'
                     ,items: [
                         {

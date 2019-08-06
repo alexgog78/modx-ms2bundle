@@ -16,9 +16,13 @@ class ms2BundleMgrGroupCreateManagerController extends ms2BundleManagerControlle
         return $this->modx->lexicon('ms2bundle.section.group');
     }
 
+    /**
+     * @return void
+     */
     public function loadCustomCssJs()
     {
-        $this->addLastJavascript($this->ms2Bundle->config['jsUrl'] . 'mgr/sections/' . self::ASSETS_CATEGORY . 'group.create.js');
-        $this->addJavascript($this->ms2Bundle->config['jsUrl'] . 'mgr/widgets/' . self::ASSETS_CATEGORY . 'group.panel.js');
+        parent::loadCustomCssJs();
+        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/' . self::ASSETS_CATEGORY . 'group.panel.js');
+        $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/' . self::ASSETS_CATEGORY . 'group.create.js');
     }
 }

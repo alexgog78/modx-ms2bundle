@@ -25,9 +25,10 @@ class ms2bundleGroupGetProcessor extends amObjectGetProcessor
     {
         $collection = $this->object->getMany('Templates');
         foreach ($collection as $object) {
-            $this->templates[] = $object->get('template_id');
+            $template = $object->getOne('Template');
+            $this->templates[] = $template->toArray();
         }
-        $this->object->set('template_ids', implode(',', $this->templates));
+        $this->object->set('templates', $this->templates);
 
         return $this->object;
     }
