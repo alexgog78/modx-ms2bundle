@@ -18,6 +18,7 @@ class ms2bundleGroupCreateProcessor extends amObjectCreateProcessor
         return parent::beforeSave();
     }
 
+    //TODO
     private function addTemplates() {
         $data = $this->getProperty('template_ids');
         if (empty($data)) {

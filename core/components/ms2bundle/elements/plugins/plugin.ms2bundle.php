@@ -9,8 +9,10 @@ if (!($ms2Bundle instanceof ms2Bundle)) {
 
 $modxEvent = $modx->event->name;
 switch ($modxEvent) {
-    /*case 'OnWebPageInit':
-        break;*/
+    //TODO WTF ¯\_(ツ)_/¯
+    case 'OnWebPageInit':
+        //$ms2Bundle->cartHandler->test();
+        break;
     case 'msOnManagerCustomCssJs':
         //Product form extend
         if (in_array($page, ['product_create', 'product_update'])) {
@@ -18,69 +20,21 @@ switch ($modxEvent) {
         }
         break;
     case 'msOnBeforeAddToCart':
-        //$modx->event->output('Error');
-
         $values = &$modx->event->returnedValues;
-        $options = &$options;
-        $modx->log(modX::LOG_LEVEL_ERROR, print_r([
-            $options
-        ], true));
-        if (empty($options['bundle'])) {
+
+        $getBundle = $ms2Bundle->cartHandler->getProductBundle($product, $options);
+        if (!$getBundle['success']) {
+            $modx->event->output($getBundle['message']);
+            return;
+        }
+        $bundle = $getBundle['data']['bundle'];
+        if (!$bundle) {
             return;
         }
 
-        $product = &$product;
-        $price = $product->getPrice();
-        foreach ($options['bundle'] as $groupId => $ingredient) {
-            //TODO refactor ¯\_(ツ)_/¯
-            if (is_array($ingredient)) {
-                foreach ($ingredient as $ingredientId) {
-                    $ingredient = $modx->getObject('ms2bundleIngredient', [
-                        'id' => $ingredientId,
-                        'group_id' => $groupId
-                    ]);
-                    if (!$ingredient) {
-                        $modx->log(modX::LOG_LEVEL_ERROR, 'Could not find ingredient(' . $ingredientId . ') in group(' . $groupId . ')');
-                        return;
-                    }
-                    $price += $ingredient->get('price');
-                    $values['options']['bundle'][$groupId][] = $ingredient->toArray();
-                }
-            } else {
-                $ingredientId = $ingredient;
-                $ingredient = $modx->getObject('ms2bundleIngredient', [
-                    'id' => $ingredientId,
-                    'group_id' => $groupId
-                ]);
-                if (!$ingredient) {
-                    $modx->log(modX::LOG_LEVEL_ERROR, 'Could not find ingredient(' . $ingredientId . ') in group(' . $groupId . ')');
-                    return;
-                }
-                $price += $ingredient->get('price');
-                $values['options']['bundle'][$groupId] = $ingredient->toArray();
-            }
-        }
-        $modx->log(modX::LOG_LEVEL_ERROR, print_r([
-            $values['options'],
-            $price
-        ], true));
+        $price = $ms2Bundle->cartHandler->calculateProductPrice($product, $bundle);
         $product->set('price', $price);
-
-        /*$values['count'] = $count + 10;
-        $values['options'] = array('size' => '99');*/
-
-        /*'product' => $product,
-        'count' => $count,
-        'options' => $options,
-        'cart' => $this,*/
-        /*$values = &$modx->event->returnedValues;
-
-
-
-
-
-        */
-
+        $values['options']['bundle'] = $bundle;
         break;
 }
 return;

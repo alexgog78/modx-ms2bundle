@@ -18,9 +18,11 @@ class ms2bundleGroupUpdateProcessor extends amObjectUpdateProcessor
         return parent::beforeSave();
     }
 
+    //TODO
     private function setTemplates()
     {
         $data = $this->getProperty('template_ids');
+        //$this->modx->log(xPDO::LOG_LEVEL_ERROR, print_r($data, true));
 
         $remaining = [];
         $existing = $this->object->getMany('Templates');
@@ -34,7 +36,7 @@ class ms2bundleGroupUpdateProcessor extends amObjectUpdateProcessor
 
         $new = array_diff($data, $remaining);
         foreach ($new as $item) {
-            if (empty($item)) {
+            if ($item === '') {
                 continue;
             }
             $template = $this->modx->newObject('ms2bundleGroupTemplate');

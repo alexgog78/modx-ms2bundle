@@ -20,12 +20,27 @@ class ms2bundleGroupGetProcessor extends amObjectGetProcessor
 
     /**
      * @return modAccessibleObject|xPDOObject
+     * TODO
      */
     private function getTemplates()
     {
         $collection = $this->object->getMany('Templates');
         foreach ($collection as $object) {
-            $template = $object->getOne('Template');
+            if ($object->get('template_id') == 0){
+                $template = $this->modx->newObject('modTemplate');
+                $template->fromArray([
+                    'id' => 0,
+                    'templatename' => $this->modx->lexicon('template_empty'),
+                    'description' => '',
+                    'editor_type' => 0,
+                    'icon' => '',
+                    'template_type' => 0,
+                    'content' => '',
+                    'locked' => false,
+                ], '', true);
+            } else {
+                $template = $object->getOne('Template');
+            }
             $this->templates[] = $template->toArray();
         }
         $this->object->set('templates', $this->templates);

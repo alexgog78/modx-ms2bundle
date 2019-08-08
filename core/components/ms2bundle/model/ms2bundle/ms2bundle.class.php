@@ -12,7 +12,7 @@ class ms2Bundle extends abstractModule
     /** @var array */
     public $handlers = [
         'mgr' => ['mgrLayoutHandler'],
-        'default' => []
+        'default' => ['bundleHandler', 'cartHandler']
     ];
 
     /**
@@ -22,7 +22,7 @@ class ms2Bundle extends abstractModule
     {
         //Add JS and CSS
         $configJs = $this->modx->toJSON($this->config);
-        $this->modx->regClientStartupScript('<script type="text/javascript">' . get_class($this->module) . ' = ' . $configJs . ';</script>', true);
+        $this->modx->regClientStartupScript('<script type="text/javascript">' . get_class($this) . ' = ' . $configJs . ';</script>', true);
         return parent::initializeBackend();
     }
 
@@ -37,13 +37,13 @@ class ms2Bundle extends abstractModule
             'jsUrl' => $this->config['jsUrl'] . 'web/',
             'actionUrl' => $this->config['actionUrl']
         ));
-        $this->modx->regClientStartupScript('<script type="text/javascript">' . get_class($this->module) . 'Config = ' . $configJs . ';</script>', true);
+        $this->modx->regClientStartupScript('<script type="text/javascript">' . get_class($this) . 'Config = ' . $configJs . ';</script>', true);
 
         $config = $this->pdoTools->makePlaceholders($this->config);
-        if ($frontendCss = $this->modx->getOption(get_class($this->module) . '_frontend_css')) {
+        if ($frontendCss = $this->modx->getOption($this->package . '_frontend_css')) {
             $this->modx->regClientCSS(str_replace($config['pl'], $config['vl'], $frontendCss));
         }
-        if ($frontendJs = $this->modx->getOption(get_class($this->module) . '_frontend_js')) {
+        if ($frontendJs = $this->modx->getOption($this->package . '_frontend_js')) {
             $this->modx->regClientScript(str_replace($config['pl'], $config['vl'], $frontendJs));
         }
         return true;
