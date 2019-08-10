@@ -1,6 +1,8 @@
 <?php
 
-require_once MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/getlist.class.php';
+if (!class_exists('amObjectGetListProcessor')) {
+    require_once MODX_CORE_PATH . 'components/abstractmodule/processors/mgr/object/getlist.class.php';
+}
 
 class ms2bundleGroupGetListProcessor extends amObjectGetListProcessor
 {

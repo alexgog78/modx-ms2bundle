@@ -9,14 +9,14 @@ ms2Bundle.formPanel.group = function (config) {
     });
     ms2Bundle.formPanel.group.superclass.constructor.call(this, config);
 };
-Ext.extend(ms2Bundle.formPanel.group, abstractModule.formPanel, {
+Ext.extend(ms2Bundle.formPanel.group, ms2Bundle.formPanel.abstract, {
     formInputs: {
         id: {xtype: 'hidden'},
-        name: {xtype: 'textfield', fieldLabel: _('ms2bundle.field.name')},
-        description: {xtype: 'textarea', fieldLabel: _('ms2bundle.field.description'), height: 170},
+        name: {xtype: 'textfield', fieldLabel: _('abstractmodule.field.name')},
+        description: {xtype: 'textarea', fieldLabel: _('abstractmodule.field.description'), height: 170},
         ingredients_min: {xtype: 'numberfield', fieldLabel: _('ms2bundle.field.ingredients_min'), decimalPrecision: 0},
         ingredients_max: {xtype: 'numberfield', fieldLabel: _('ms2bundle.field.ingredients_max'), decimalPrecision: 0},
-        active: {xtype: 'combo-boolean', fieldLabel: _('ms2bundle.field.active'), value: 1},
+        active: {xtype: 'combo-boolean', fieldLabel: _('abstractmodule.field.active'), value: 1},
         template_ids: {xtype: 'ms2bundle-combo-templates', fieldLabel: _('ms2bundle.field.templates')}
     },
 
@@ -160,7 +160,7 @@ Ext.extend(ms2Bundle.formPanel.group, abstractModule.formPanel, {
     getIngredientsPanel: function (config) {
         var panel = [];
         panel.push((config.record_id === '' || config.record_id === 0) ? {
-            html: _('ms2bundle.field.undefined'),
+            html: _('abstractmodule.field.undefined'),
             cls: 'panel-desc',
             style: {
                 fontSize: '170%',

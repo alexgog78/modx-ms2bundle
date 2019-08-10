@@ -6,8 +6,6 @@ if (!class_exists('ms2BundleManagerController')) {
 
 class ms2BundleMgrGroupUpdateManagerController extends ms2BundleManagerController
 {
-    const ASSETS_CATEGORY = 'group/';
-
     /** @var string */
     protected $recordClassKey = 'ms2bundleGroup';
 
@@ -32,9 +30,9 @@ class ms2BundleMgrGroupUpdateManagerController extends ms2BundleManagerControlle
     public function loadCustomCssJs()
     {
         parent::loadCustomCssJs();
-        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/' . self::ASSETS_CATEGORY . 'group.panel.js');
+        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/group/group.panel.js');
         $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/ingredients/ingredients.grid.js');
-        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/' . self::ASSETS_CATEGORY . 'ingredients.grid.js');
-        $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/' . self::ASSETS_CATEGORY . 'group.update.js');
+        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/group/ingredients.grid.js');
+        $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/group/group.update.js');
     }
 }

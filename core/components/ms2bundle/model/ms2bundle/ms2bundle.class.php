@@ -22,7 +22,6 @@ class ms2Bundle extends abstractModule
     {
         parent::initializeBackend();
 
-        //Base JS and CSS
         $this->modx->controller->addCss($this->config['cssUrl'] . 'mgr/default.css');
         $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/ms2bundle.js');
         $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/misc/renderer.list.js');
@@ -46,14 +45,7 @@ class ms2Bundle extends abstractModule
      */
     public function initializeFrontend()
     {
-        //Add JS and CSS
-        $configJs = $this->modx->toJSON(array(
-            'cssUrl' => $this->config['cssUrl'] . 'web/',
-            'jsUrl' => $this->config['jsUrl'] . 'web/',
-            'actionUrl' => $this->config['actionUrl']
-        ));
-        //TODO ms2BundleConfig
-        $this->modx->regClientStartupScript('<script type="text/javascript">' . get_class($this) . 'Config = ' . $configJs . ';</script>', true);
+        parent::initializeFrontend();
 
         $config = $this->pdoTools->makePlaceholders($this->config);
         if ($frontendCss = $this->modx->getOption($this->package . '_frontend_css')) {

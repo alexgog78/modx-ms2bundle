@@ -6,8 +6,6 @@ if (!class_exists('ms2BundleManagerController')) {
 
 class ms2BundleMgrGroupsManagerController extends ms2BundleManagerController
 {
-    const ASSETS_CATEGORY = 'group/';
-
     /**
      * @return string
      */
@@ -22,7 +20,7 @@ class ms2BundleMgrGroupsManagerController extends ms2BundleManagerController
     public function loadCustomCssJs()
     {
         parent::loadCustomCssJs();
-        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/' . self::ASSETS_CATEGORY . 'groups.grid.js');
-        $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/' . self::ASSETS_CATEGORY . 'groups.panel.js');
+        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/group/groups.grid.js');
+        $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/group/groups.panel.js');
     }
 }

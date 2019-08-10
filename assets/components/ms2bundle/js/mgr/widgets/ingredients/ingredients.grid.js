@@ -3,21 +3,12 @@ ms2Bundle.grid.ingredients = function (config) {
     if (!config.id) {
         config.id = 'ms2bundle-grid-ingredients';
     }
-
     Ext.applyIf(config, {
-        //Settings
         url: ms2Bundle.config.connectorUrl,
         baseParams: {
-            action: 'mgr/ingredient/getlist',
-            //group_id: config.group_id
+            action: 'mgr/ingredient/getlist'
         },
-        paging: true,
-        remoteSort: true,
-        anchor: '97%',
         save_action: 'mgr/ingredient/updatefromgrid',
-        autosave: true,
-
-        //Grid
         fields: [
             'id',
             'group_id',
@@ -35,8 +26,8 @@ ms2Bundle.grid.ingredients = function (config) {
         ],
         columns: [
             {header: _('id'), dataIndex: 'id', sortable: true, width: 0.05},
-            {header:_('ms2bundle.field.image'), dataIndex:'image', sortable:false, width:0.1, renderer: ms2Bundle.renderer.renderImage},
-            {header: _('ms2bundle.field.name'), dataIndex: 'name', sortable: true, width: 0.1, editor: {xtype: 'textfield'}},
+            {header:_('abstractmodule.field.image'), dataIndex:'image', sortable:false, width:0.1, renderer: ms2Bundle.renderer.image},
+            {header: _('abstractmodule.field.name'), dataIndex: 'name', sortable: true, width: 0.1, editor: {xtype: 'textfield'}},
             {header: _('ms2bundle.field.price'), dataIndex: 'price', sortable: true, width: 0.1, editor: {xtype: 'numberfield'}},
             {header: _('ms2bundle.field.weight'), dataIndex: 'weight', sortable: true, width: 0.1, editor: {xtype: 'numberfield'}},
             {header: _('ms2bundle.field.proteins'), dataIndex: 'proteins', sortable: true, width: 0.1, editor: {xtype: 'numberfield'}},
@@ -44,7 +35,7 @@ ms2Bundle.grid.ingredients = function (config) {
             {header: _('ms2bundle.field.carbohydrates'), dataIndex: 'carbohydrates', sortable: true, width: 0.1, editor: {xtype: 'numberfield'}},
             {header: _('ms2bundle.field.calories'), dataIndex: 'calories', sortable: true, width: 0.1, editor: {xtype: 'numberfield'}},
             {header: _('ms2bundle.field.by_default'), dataIndex: 'by_default', sortable: true, width: 0.1, editor: {xtype: 'combo-boolean', renderer: 'boolean'}},
-            {header: _('ms2bundle.field.active'), dataIndex: 'active', sortable: true, width: 0.1, editor: {xtype: 'combo-boolean', renderer: 'boolean'}}
+            {header: _('abstractmodule.field.active'), dataIndex: 'active', sortable: true, width: 0.1, editor: {xtype: 'combo-boolean', renderer: 'boolean'}}
         ],
 
         //Toolbar
@@ -53,7 +44,7 @@ ms2Bundle.grid.ingredients = function (config) {
             {
                 xtype: 'textfield',
                 id: config.id + '-search-filter',
-                emptyText: _('ms2bundle.controls.search'),
+                emptyText: _('abstractmodule.controls.search'),
                 listeners: {
                     'change': {fn: ms2Bundle.function.search, scope: this},
                     'render': {
@@ -73,7 +64,7 @@ ms2Bundle.grid.ingredients = function (config) {
             },
             //Create button
             {
-                text: _('ms2bundle.controls.create'),
+                text: _('abstractmodule.controls.create'),
                 cls: 'primary-button',
                 scope: this,
                 handler: ms2Bundle.function.createRecord,
@@ -87,34 +78,22 @@ ms2Bundle.grid.ingredients = function (config) {
                     }
                 }
             }
-        ],
-
-        //Grid row additional classes
-        viewConfig: {
-            forceFit: true,
-            getRowClass: function (record, index, rowParams, store) {
-                var rowClass = [];
-                if (record.get('active') == 0 || record.get('blocked') == 1) {
-                    rowClass.push('grid-row-inactive');
-                }
-                return rowClass.join(' ');
-            }
-        }
+        ]
     });
     ms2Bundle.grid.ingredients.superclass.constructor.call(this, config)
 };
-Ext.extend(ms2Bundle.grid.ingredients, MODx.grid.Grid, {
+Ext.extend(ms2Bundle.grid.ingredients, ms2Bundle.grid.abstract, {
     //Context menu function
     getMenu: function () {
         return [{
-            text: _('ms2bundle.controls.update'),
+            text: _('abstractmodule.controls.update'),
             handler: ms2Bundle.function.updateRecord,
             baseParams: {
                 action: 'mgr/ingredient/update',
                 fields: this.getFields('update')
             }
         }, '-', {
-            text: _('ms2bundle.controls.remove'),
+            text: _('abstractmodule.controls.remove'),
             handler: ms2Bundle.function.removeRecord,
             baseParams: {
                 action: 'mgr/ingredient/remove'
@@ -147,10 +126,10 @@ Ext.extend(ms2Bundle.grid.ingredients, MODx.grid.Grid, {
                     ,layout: 'form'
                     ,items: [
                         //{xtype: 'ms2bundle-combo-group', name: 'group_id', fieldLabel: _('ms2bundle.field.group'), anchor: '100%', readOnly: true},
-                        {xtype: 'textfield', name: 'name', fieldLabel: _('ms2bundle.field.name'), anchor: '100%'},
-                        {xtype: 'textarea', name: 'description', fieldLabel: _('ms2bundle.field.description'), anchor: '100%'},
+                        {xtype: 'textfield', name: 'name', fieldLabel: _('abstractmodule.field.name'), anchor: '100%'},
+                        {xtype: 'textarea', name: 'description', fieldLabel: _('abstractmodule.field.description'), anchor: '100%'},
                         //TODO source
-                        {xtype:'ms2bundle-combo-browser', name:'image', fieldLabel:_('ms2bundle.field.image'), anchor:'100%', source: 3},
+                        {xtype:'ms2bundle-combo-browser', name:'image', fieldLabel:_('abstractmodule.field.image'), anchor:'100%', source: 3},
                         {
                             layout: 'column',
                             items: [{
@@ -166,7 +145,7 @@ Ext.extend(ms2Bundle.grid.ingredients, MODx.grid.Grid, {
                                 layout: 'form',
                                 items: [
                                     {xtype: 'numberfield', name: 'weight', fieldLabel: _('ms2bundle.field.weight'), anchor: '100%', decimalPrecision: 3},
-                                    {xtype:'combo-boolean', name:'active', fieldLabel:_('ms2bundle.field.active'), anchor:'100%'},
+                                    {xtype:'combo-boolean', name:'active', fieldLabel:_('abstractmodule.field.active'), anchor:'100%'},
                                 ],
                             }]
                         }

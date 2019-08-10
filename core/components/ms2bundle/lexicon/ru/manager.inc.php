@@ -1,18 +1,4 @@
 <?php
-//Controls
-$_lang['ms2bundle.controls.search'] = 'Поиск...';
-$_lang['ms2bundle.controls.save'] = 'Сохранить';
-$_lang['ms2bundle.controls.create'] = 'Добавить';
-$_lang['ms2bundle.controls.update'] = 'Редактировать';
-$_lang['ms2bundle.controls.remove'] = 'Удалить';
-$_lang['ms2bundle.controls.view'] = 'Просмотр';
-$_lang['ms2bundle.controls.cancel'] = 'Отменить';
-$_lang['ms2bundle.controls.return'] = 'Назад';
-$_lang['ms2bundle.controls.remove_confirm'] = 'Вы действительно хотите удалить запись?';
-$_lang['ms2bundle.controls.upload'] = 'Загрузить';
-$_lang['ms2bundle.controls.source'] = 'Источник файлов';
-
-
 //Sections
 $_lang['ms2bundle.section.groups'] = 'Группы свойств';
 $_lang['ms2bundle.section.groups.management'] = 'Управление группами свойств';

@@ -3,8 +3,6 @@ ms2Bundle.grid.groupIngredients = function (config) {
     if (!config.id) {
         config.id = 'ms2bundle-grid-group-ingredients';
     }
-    console.log(config);
-
     Ext.applyIf(config, {
         baseParams: {
             action: 'mgr/ingredient/getlist',
@@ -15,7 +13,7 @@ ms2Bundle.grid.groupIngredients = function (config) {
             {
                 xtype: 'textfield',
                 id: config.id + '-search-filter',
-                emptyText: _('ms2bundle.controls.search'),
+                emptyText: _('abstractmodule.controls.search'),
                 listeners: {
                     'change': {fn: ms2Bundle.function.search, scope: this},
                     'render': {
@@ -35,7 +33,7 @@ ms2Bundle.grid.groupIngredients = function (config) {
             },
             //Create button
             {
-                text: _('ms2bundle.controls.create'),
+                text: _('abstractmodule.controls.create'),
                 cls: 'primary-button',
                 scope: this,
                 handler: ms2Bundle.function.createRecord,

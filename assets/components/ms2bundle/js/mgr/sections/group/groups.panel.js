@@ -3,7 +3,6 @@ Ext.onReady(function () {
         xtype: 'ms2bundle-panel-groups'
     });
 });
-
 ms2Bundle.panel.groups = function (config) {
     config = config || {};
     Ext.apply(config, {

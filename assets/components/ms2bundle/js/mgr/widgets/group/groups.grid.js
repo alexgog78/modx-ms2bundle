@@ -3,33 +3,24 @@ ms2Bundle.grid.groups = function (config) {
     if (!config.id) {
         config.id = 'ms2bundle-grid-groups';
     }
-
     Ext.applyIf(config, {
-        //Settings
-        id: 'ms2bundle-grid-groups',
         url: ms2Bundle.config.connectorUrl,
         baseParams: {
             action: 'mgr/group/getlist'
         },
-        paging: true,
-        remoteSort: true,
-        anchor: '97%',
         save_action: 'mgr/group/updatefromgrid',
-        autosave: true,
-
-        //Grid
         fields: [
             'id',
             'name',
             'description',
-            'template_id',
+            //'template_id',
             'active'
         ],
         columns: [
             {header: _('id'), dataIndex: 'id', sortable: true, width: 0.05},
-            {header: _('ms2bundle.field.name'), dataIndex: 'name', sortable: true, width: 0.2, editor: {xtype: 'textfield'}},
-            {header: _('ms2bundle.field.template'), dataIndex: 'template_id', sortable: true, width: 0.2},
-            {header: _('ms2bundle.field.active'), dataIndex: 'active', sortable: true, width: 0.1, editor: {xtype: 'combo-boolean', renderer: 'boolean'}}
+            {header: _('abstractmodule.field.name'), dataIndex: 'name', sortable: true, width: 0.2, editor: {xtype: 'textfield'}},
+            //{header: _('ms2bundle.field.template'), dataIndex: 'template_id', sortable: true, width: 0.2},
+            {header: _('abstractmodule.field.active'), dataIndex: 'active', sortable: true, width: 0.1, editor: {xtype: 'combo-boolean', renderer: 'boolean'}}
         ],
 
         //Toolbar
@@ -38,7 +29,7 @@ ms2Bundle.grid.groups = function (config) {
             {
                 xtype: 'textfield',
                 id: config.id + '-search-filter',
-                emptyText: _('ms2bundle.controls.search'),
+                emptyText: _('abstractmodule.controls.search'),
                 listeners: {
                     'change': {fn: ms2Bundle.function.search, scope: this},
                     'render': {
@@ -58,7 +49,7 @@ ms2Bundle.grid.groups = function (config) {
             },
             //Create button
             {
-                text: _('ms2bundle.controls.create'),
+                text: _('abstractmodule.controls.create'),
                 handler: this.createFunction,
                 scope: this,
                 cls: 'primary-button'
@@ -66,7 +57,7 @@ ms2Bundle.grid.groups = function (config) {
         ],
 
         //Grid row additional classes
-        viewConfig: {
+        /*viewConfig: {
             forceFit: true,
             getRowClass: function (record, index, rowParams, store) {
                 var rowClass = [];
@@ -75,18 +66,18 @@ ms2Bundle.grid.groups = function (config) {
                 }
                 return rowClass.join(' ');
             }
-        }
+        }*/
     });
     ms2Bundle.grid.groups.superclass.constructor.call(this, config)
 };
-Ext.extend(ms2Bundle.grid.groups, MODx.grid.Grid, {
+Ext.extend(ms2Bundle.grid.groups, ms2Bundle.grid.abstract, {
     //Context menu function
     getMenu: function () {
         return [{
-            text: _('ms2bundle.controls.update'),
+            text: _('abstractmodule.controls.update'),
             handler: this.updateFunction
         }, '-', {
-            text: _('ms2bundle.controls.remove'),
+            text: _('abstractmodule.controls.remove'),
             handler: ms2Bundle.function.removeRecord,
             baseParams: {
                 action: 'mgr/group/remove'
