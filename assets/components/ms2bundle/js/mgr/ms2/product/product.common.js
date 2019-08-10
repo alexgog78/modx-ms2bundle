@@ -1,52 +1,61 @@
-Ext.override(miniShop2.panel.Product, {
-    originals: {
-        getFields: miniShop2.panel.Product.prototype.getFields
+//TODO Ext component
+
+
+/*ms2Bundle.panel.productTab = function (config) {
+    config = config || {};
+    Ext.applyIf(config, {});
+    ms2Bundle.page.productTab.superclass.constructor.call(this, config);
+};
+Ext.extend(ms2Bundle.panel.productTab, MODx.Component, {
+
+});
+Ext.reg('ms2bundle-panel-product-tab', ms2Bundle.panel.productTab);*/
+
+ms2Bundle.productTab = {
+    getTab: function () {
+        return {
+            title: _('ms2bundle.tab.ingredients'),
+            bodyCssClass: 'main-wrapper',
+            items: this.getPanel()
+        };
     },
 
-    /*getFields: function (config) {
-        var _this = this;
-        var originals = _this.originals.getFields.call(_this, config);
-        var resourceTabs = originals.find(item => item.id === 'modx-resource-tabs');
-        var productTabWrapper = resourceTabs.items.find(item => item.id === 'minishop2-product-tab');
-        var productTabs = productTabWrapper.items.find(item => item.id === 'minishop2-product-tabs');
+    getPanel: function () {
+        console.log(ms2Bundle.record)
+        var panel = [];
 
-        //Ext.each(ms2ExtendConfig.tabs, function(item) {
-            var newTab = _this.addTab(config);
-            productTabs.items.splice(3, 0, newTab);
-        //});
-
-        return originals;
-    },*/
-
-    addTab: function (config) {
-        /*var enabled = miniShop2.config.data_fields;
-        var available = tab.fields;
-
-        var product_fields = this.getAllProductFields(config);
-        var col1 = [];
-        var col2 = [];
-        var tmp;
-        for (var i = 0; i < available.length; i++) {
-            var field = available[i];
-            if ((enabled.length > 0 && enabled.indexOf(field) === -1) || this.active_fields.indexOf(field) !== -1) {
-                continue;
-            }
-            if (tmp = product_fields[field]) {
-                this.active_fields.push(field);
-                tmp = this.getExtField(config, field, tmp);
-                if (i % 2) {
-                    col2.push(tmp);
-                } else {
-                    col1.push(tmp);
+        if (ms2Bundle.record.record_id === '' || ms2Bundle.record.record_id === 0) {
+            return {
+                html: _('ms2bundle.field.undefined'),
+                cls: 'panel-desc',
+                style: {
+                    fontSize: '170%',
+                    textAlign: 'center'
                 }
-            }
-        }*/
+            };
+        }
 
-        return {
-            title: 'zzz',
-            bodyCssClass: 'main-wrapper',
-            items: [],
-            listeners: {},
-        };
+
+
+        Ext.each(ms2Bundle.record.bundleGroups, function(groupId) {
+            console.log(groupId);
+            panel.push({
+                xtype:'fieldset',
+                title: 'ms2_product_color_textile',
+                border:false,
+                anchor:'100%',
+                items: []
+            });
+        });
+
+
+        return panel;
     }
+}
+
+Ext.ComponentMgr.onAvailable('minishop2-product-tabs', function () {
+    this.on('beforerender', function () {
+        console.log(this.config);
+        this.add(ms2Bundle.productTab.getTab());
+    });
 });

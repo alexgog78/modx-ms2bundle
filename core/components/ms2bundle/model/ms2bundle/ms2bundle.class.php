@@ -12,24 +12,39 @@ class ms2Bundle extends abstractModule
     /** @var array */
     public $handlers = [
         'mgr' => ['mgrLayoutHandler'],
-        'default' => ['bundleHandler', 'cartHandler']
+        'default' => ['cartHandler']
     ];
 
     /**
      * @return bool
      */
-    protected function initializeBackend()
+    public function initializeBackend()
     {
-        //Add JS and CSS
-        $configJs = $this->modx->toJSON($this->config);
-        $this->modx->regClientStartupScript('<script type="text/javascript">' . get_class($this) . ' = ' . $configJs . ';</script>', true);
-        return parent::initializeBackend();
+        parent::initializeBackend();
+
+        //Base JS and CSS
+        $this->modx->controller->addCss($this->config['cssUrl'] . 'mgr/default.css');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/ms2bundle.js');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/misc/renderer.list.js');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/misc/combo.list.js');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/misc/function.list.js');
+
+        $configJs = $this->modx->toJSON($this->config ?? []);
+        $this->modx->controller->addHtml('
+            <script type="text/javascript">
+                Ext.onReady(function () {
+                    ' . get_class($this) . '.config = ' . $configJs . ';
+                });
+            </script>'
+        );
+
+        return true;
     }
 
     /**
      * @return bool
      */
-    protected function initializeFrontend()
+    public function initializeFrontend()
     {
         //Add JS and CSS
         $configJs = $this->modx->toJSON(array(
@@ -37,6 +52,7 @@ class ms2Bundle extends abstractModule
             'jsUrl' => $this->config['jsUrl'] . 'web/',
             'actionUrl' => $this->config['actionUrl']
         ));
+        //TODO ms2BundleConfig
         $this->modx->regClientStartupScript('<script type="text/javascript">' . get_class($this) . 'Config = ' . $configJs . ';</script>', true);
 
         $config = $this->pdoTools->makePlaceholders($this->config);

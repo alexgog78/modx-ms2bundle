@@ -28,7 +28,7 @@ $productId = $productId ?? $modx->resource->id;
 /** @var ms2bundleGroup $group */
 $bundleGroup = $pdoFetch->getArray('ms2bundleGroup', [
     'id' => $groupId,
-    //'active' => 1
+    'active' => 1
 ]);
 if (!$bundleGroup) {
     return $modx->lexicon('ms2bundle_err_nf');
@@ -43,25 +43,26 @@ if (!$bundleGroup) {
 $config = [
     'class' => $class,
     'leftJoin' => [],
-    /*'innerJoin' => [
+    'innerJoin' => [
         'Product' => [
             'class' => 'ms2bundleProductIngredient',
             'on' => 'Product.ingredient_id = ' . $class . '.id && Product.product_id=' . $productId
         ]
-    ],*/
+    ],
     'select' => [
         $class => $modx->getSelectColumns($class, $class),
     ],
     'where' => [
-        $class . '.group_id' => $groupId
+        $class . '.group_id' => $groupId,
+        $class . '.active' => 1
     ]
 ];
 
 
 //Additional filtering
-if (empty($showInactive)) {
-    //$config['where'][$class . '.active:>'] = 0;
-}
+/*if (empty($showInactive)) {
+    $config['where'][$class . '.active:>'] = 0;
+}*/
 
 
 //User config

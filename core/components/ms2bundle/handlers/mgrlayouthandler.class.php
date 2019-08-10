@@ -2,52 +2,39 @@
 
 namespace ms2Bundle\Handlers;
 
-class mgrLayoutHandler
+class mgrLayoutHandler extends \abstractModule\Handlers\abstractHandler
 {
-    /** @var ms2Bundle */
-    private $ms2Bundle;
-
-    /** @var array */
-    private $config = [];
-
-    /** @var modX */
-    private $modx;
+    /** @var ms2bundleGroup|null */
+    private $bundleGroupFactory;
 
     /**
-     * mgrLayoutHandler constructor.
-     * @param \ms2Bundle $ms2Bundle
+     * cartHandler constructor.
+     * @param $module
      * @param array $config
      */
-    function __construct(\ms2Bundle & $ms2Bundle, array $config = [])
+    public function __construct(& $module, array $config = [])
     {
-        $this->ms2bundle = &$ms2Bundle;
-        $this->config = $config;
-        $this->modx = &$ms2Bundle->modx;
+        parent::__construct($module, $config);
+        $this->bundleGroupFactory = $this->modx->newObject('ms2bundleGroup');
+        $this->modx->controller->addLexiconTopic($this->module->package . ':default');
     }
 
-    public function getProductLayout()
+    /**
+     * @param $resource
+     * return void
+     */
+    public function getProductLayout($resource)
     {
-        /*$query = $this->modx->newQuery('ms2extProductTab');
-        $query->select($this->modx->getSelectColumns('ms2extProductTab', 'ms2extProductTab', ''));
-
-        if (!empty($tabsIds)) {
-            $query->where(array(
-                'id:IN' => $tabsIds
-            ));
+        $templateId = $resource->template;
+        $templateGroups = $this->bundleGroupFactory->getTemplateGroupIds($templateId);
+        if (!$templateGroups) {
+            return;
         }
-
-        $query->prepare();
-        $query->stmt->execute();
-        $mas = $query->stmt->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($mas as $item) {
-            $item['fields'] = explode(',', $item['fields']);
-            $tabs[] = $item;
-        }
-
-        $configJs .= preg_replace(array('/^\n/', '/\t{5}/'), '', '
-            ms2Extend.tabs = ' . $this->modx->toJSON($tabs) . ';
-        ');
-        $this->modx->controller->addHtml('<script type="text/javascript">' . $configJs . '</script>');*/
+        $configJs = $this->modx->toJSON([
+            'record_id' => $resource->id,
+            'bundleGroups' => $templateGroups
+        ]);
+        $this->modx->controller->addHtml('<script type="text/javascript">' . get_class($this->module) . '.record = ' . $configJs . ';</script>');
         $this->modx->controller->addLastJavascript($this->config['jsUrl'] . 'mgr/ms2/product/product.common.js');
     }
 }

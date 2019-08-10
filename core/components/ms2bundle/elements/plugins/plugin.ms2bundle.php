@@ -16,7 +16,7 @@ switch ($modxEvent) {
     case 'msOnManagerCustomCssJs':
         //Product form extend
         if (in_array($page, ['product_create', 'product_update'])) {
-            //$ms2Bundle->mgrLayoutHandler->getProductLayout();
+            $ms2Bundle->mgrLayoutHandler->getProductLayout($controller->resource);
         }
         break;
     case 'msOnBeforeAddToCart':
