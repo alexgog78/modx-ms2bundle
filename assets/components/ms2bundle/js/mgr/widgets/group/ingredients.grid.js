@@ -13,7 +13,7 @@ ms2Bundle.grid.groupIngredients = function (config) {
             {
                 xtype: 'textfield',
                 id: config.id + '-search-filter',
-                emptyText: _('abstractmodule.controls.search'),
+                emptyText: _('ms2bundle.controls.search'),
                 listeners: {
                     'change': {fn: ms2Bundle.function.search, scope: this},
                     'render': {
@@ -33,7 +33,7 @@ ms2Bundle.grid.groupIngredients = function (config) {
             },
             //Create button
             {
-                text: _('abstractmodule.controls.create'),
+                text: _('ms2bundle.controls.create'),
                 cls: 'primary-button',
                 scope: this,
                 handler: ms2Bundle.function.createRecord,

@@ -11,7 +11,7 @@ ms2Bundle.page.groupCreate = function (config) {
         url: ms2Bundle.config.connectorUrl,
         formpanel: 'ms2bundle-formpanel-group',
         buttons: [{
-            text: _('abstractmodule.controls.save'),
+            text: _('ms2bundle.controls.save'),
             process: 'mgr/group/create',
             method: 'remote',
             reload: true,
@@ -21,7 +21,7 @@ ms2Bundle.page.groupCreate = function (config) {
                 ctrl: true
             }]
         }, {
-            text: _('abstractmodule.controls.cancel'),
+            text: _('ms2bundle.controls.cancel'),
             handler: function () {
                 MODx.loadPage('mgr/groups', 'namespace=ms2bundle')
             }

@@ -1,18 +1,11 @@
-ms2Bundle.function = {
-    search: function (tf, nv, ov) {
-        var s = this.getStore();
-        s.baseParams.query = tf.getValue();
-        this.getBottomToolbar().changePage(1);
-        this.refresh();
-    },
-
+Ext.apply(ms2Bundle.function, {
     createRecord: function (btn, e) {
         var options = btn.baseParams;
         if (this.windows.createWindow) this.windows.createWindow.getEl().remove();
         if (this.windows.updateWindow) this.windows.updateWindow.getEl().remove();
         this.windows.createWindow = MODx.load({
             xtype: 'ms2bundle-window-record',
-            title: _('abstractmodule.controls.create'),
+            title: _('ms2bundle.controls.create'),
             width: options.width || 600,
             url: this.config.url,
             baseParams: {
@@ -38,7 +31,7 @@ ms2Bundle.function = {
         if (this.windows.updateWindow) this.windows.updateWindow.getEl().remove();
         this.windows.updateWindow = MODx.load({
             xtype: 'ms2bundle-window-record',
-            title: _('abstractmodule.controls.update'),
+            title: _('ms2bundle.controls.update'),
             width: options.width || 600,
             url: this.config.url,
             baseParams: {
@@ -62,8 +55,8 @@ ms2Bundle.function = {
     removeRecord: function (btn, e) {
         var options = btn.options.baseParams;
         MODx.msg.confirm({
-            title: _('abstractmodule.controls.remove'),
-            text: _('abstractmodule.controls.remove_confirm'),
+            title: _('ms2bundle.controls.remove'),
+            text: _('ms2bundle.controls.remove_confirm'),
             url: this.config.url,
             params: {
                 action: options.action,
@@ -82,4 +75,4 @@ ms2Bundle.function = {
             }
         });
     }
-}
+});

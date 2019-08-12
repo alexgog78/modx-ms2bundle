@@ -1,5 +1,6 @@
 ms2Bundle = function (config) {
     config = config || {};
+    config.namespace = 'ms2bundle';
     ms2Bundle.superclass.constructor.call(this, config);
 };
 Ext.extend(ms2Bundle, Ext.Component, abstractModule);
@@ -30,5 +31,5 @@ Ext.reg('ms2bundle', ms2Bundle);*/
     renderer: {},
     function: {}
 });
-Ext.reg('abstractmodule', abstractModule);
+Ext.reg('ms2bundle', abstractModule);
 abstractModule = new abstractModule();*/
