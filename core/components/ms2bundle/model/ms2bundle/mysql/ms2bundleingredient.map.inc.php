@@ -16,8 +16,8 @@ $xpdo_meta_map['ms2bundleIngredient'] = array(
             'image' => NULL,
             'price' => 0.0,
             'weight' => 0.0,
-            'by_default' => 0,
-            'active' => 1,
+            'is_default' => 0,
+            'is_active' => 1,
             'proteins' => 0.0,
             'fats' => 0.0,
             'carbohydrates' => 0.0,
@@ -68,7 +68,7 @@ $xpdo_meta_map['ms2bundleIngredient'] = array(
                     'phptype' => 'float',
                     'default' => 0.0,
                 ),
-            'by_default' =>
+            'is_default' =>
                 array(
                     'dbtype' => 'tinyint',
                     'precision' => '1',
@@ -77,7 +77,7 @@ $xpdo_meta_map['ms2bundleIngredient'] = array(
                     'null' => false,
                     'default' => 0,
                 ),
-            'active' =>
+            'is_active' =>
                 array(
                     'dbtype' => 'tinyint',
                     'precision' => '1',

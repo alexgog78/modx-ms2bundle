@@ -6,7 +6,7 @@ if (file_exists($baseLexicons)) {
     require_once $baseLexicons;
 
 }
-
+//TODO check
 if ($_abstract_lang) {
     foreach ($_abstract_lang as $key => $value) {
         $_lang['ms2bundle.' . $key] = $value;

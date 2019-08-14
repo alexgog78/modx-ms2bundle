@@ -32,6 +32,7 @@ class ms2BundleMgrGroupUpdateManagerController extends ms2BundleManagerControlle
         parent::loadCustomCssJs();
         $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/group/group.panel.js');
         $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/ingredients/ingredients.grid.js');
+        $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/ingredients/ingredient.window.js');
         $this->addJavascript($this->module->config['jsUrl'] . 'mgr/widgets/group/ingredients.grid.js');
         $this->addLastJavascript($this->module->config['jsUrl'] . 'mgr/sections/group/group.update.js');
     }

@@ -14,7 +14,7 @@ $xpdo_meta_map['ms2bundleGroup'] = array(
             'description' => NULL,
             'ingredients_min' => NULL,
             'ingredients_max' => NULL,
-            'active' => 1,
+            'is_active' => 1,
         ),
     'fieldMeta' =>
         array(
@@ -48,7 +48,7 @@ $xpdo_meta_map['ms2bundleGroup'] = array(
                     'phptype' => 'integer',
                     'null' => true,
                 ),
-            'active' =>
+            'is_active' =>
                 array(
                     'dbtype' => 'tinyint',
                     'precision' => '1',

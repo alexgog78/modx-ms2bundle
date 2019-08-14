@@ -7,8 +7,8 @@ ms2Bundle.grid.groupIngredients = function (config) {
         baseParams: {
             action: 'mgr/ingredient/getlist',
             group_id: config.group_id
-        },
-        tbar: [
+        }
+        /*tbar: [
             //Search panel
             {
                 xtype: 'textfield',
@@ -47,7 +47,7 @@ ms2Bundle.grid.groupIngredients = function (config) {
                     }
                 }
             }
-        ]
+        ]*/
     });
     ms2Bundle.grid.groupIngredients.superclass.constructor.call(this, config)
 };

@@ -1,5 +1,5 @@
 //Modal window
-ms2Bundle.window.recordWindow = function (config) {
+/*ms2Bundle.window.recordWindow = function (config) {
     config = config || {};
     Ext.applyIf(config, {
         width: config.width || 600
@@ -7,7 +7,7 @@ ms2Bundle.window.recordWindow = function (config) {
     ms2Bundle.window.recordWindow.superclass.constructor.call(this, config);
 };
 Ext.extend(ms2Bundle.window.recordWindow, MODx.Window);
-Ext.reg('ms2bundle-window-record', ms2Bundle.window.recordWindow);
+Ext.reg('ms2bundle-window-record', ms2Bundle.window.recordWindow);*/
 
 
 /*ms2Bundle.combo.zzz = function(config) {

@@ -1,3 +1,1 @@
-Ext.apply(ms2Bundle.renderer, {
-
-});
+Ext.apply(ms2Bundle.renderer, {});

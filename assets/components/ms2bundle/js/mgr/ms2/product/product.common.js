@@ -55,8 +55,8 @@ ms2Bundle.productTab = {
 
 Ext.ComponentMgr.onAvailable('minishop2-product-tabs', function () {
     this.on('beforerender', function () {
-        var panel = this;
+        /*var panel = this;
         console.log(this.config);
-        panel.add(ms2Bundle.productTab.getTab());
+        panel.add(ms2Bundle.productTab.getTab());*/
     });
 });

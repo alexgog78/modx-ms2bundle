@@ -6,7 +6,7 @@
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="ingredients_min" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true"/>
         <field key="ingredients_max" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true"/>
-        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1"/>
+        <field key="is_active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1"/>
         <!--Links-->
         <composite alias="Templates" class="ms2bundleGroupTemplate" local="id" foreign="group_id" cardinality="many" owner="local"/>
         <composite alias="Ingredients" class="ms2bundleIngredient" local="id" foreign="group_id" cardinality="many" owner="local"/>
@@ -34,8 +34,8 @@
         <field key="image" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="price" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
         <field key="weight" dbtype="decimal" precision="13,3" phptype="float" default="0"/>
-        <field key="by_default" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="0"/>
-        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1"/>
+        <field key="is_default" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="0"/>
+        <field key="is_active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1"/>
         <!--Custom Data-->
         <!--TODO Replace by plugin-->
         <field key="proteins" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
