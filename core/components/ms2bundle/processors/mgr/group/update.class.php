@@ -23,7 +23,11 @@ class ms2bundleGroupUpdateProcessor extends amObjectUpdateProcessor
     //TODO
     private function setTemplates()
     {
+        //$this->modx->log(xPDO::LOG_LEVEL_ERROR, print_r($this->getProperties(), true));
         $data = $this->getProperty('template_ids');
+        if (!$data) {
+            return;
+        }
         //$this->modx->log(xPDO::LOG_LEVEL_ERROR, print_r($data, true));
 
         $remaining = [];

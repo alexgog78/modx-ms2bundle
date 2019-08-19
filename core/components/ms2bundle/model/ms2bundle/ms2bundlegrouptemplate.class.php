@@ -6,4 +6,9 @@ if (!class_exists('amObject')) {
 
 class ms2bundleGroupTemplate extends amObject
 {
+    const BOOLEAN_FIELDS = [];
+
+    const REQUIRED_FIELDS = [];
+
+    const UNIQUE_FIELDS = [];
 }

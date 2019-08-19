@@ -11,3 +11,5 @@ $_lang['ms2bundle.field.proteins'] = 'Белки';
 $_lang['ms2bundle.field.fats'] = 'Жиры';
 $_lang['ms2bundle.field.carbohydrates'] = 'Углеводы';
 $_lang['ms2bundle.field.calories'] = 'Калории';
+$_lang['ms2bundle.field.product'] = 'Товар';
+$_lang['ms2bundle.field.ingredient'] = 'Ингредиент';

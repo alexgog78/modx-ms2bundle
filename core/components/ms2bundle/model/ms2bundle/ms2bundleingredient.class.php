@@ -6,6 +6,11 @@ if (!class_exists('amSimpleObject')) {
 
 class ms2bundleIngredient extends amSimpleObject
 {
+    const BOOLEAN_FIELDS = [
+        'is_default',
+        'is_active'
+    ];
+
     const REQUIRED_FIELDS = [
         'group_id',
         'name'
@@ -30,7 +35,7 @@ class ms2bundleIngredient extends amSimpleObject
         $query = $this->xpdo->newQuery($this->_class);
         $query->where([
             'id' => $ingredientId,
-            'active' => 1
+            'is_active' => 1
         ]);
 
         if ($groupId) {

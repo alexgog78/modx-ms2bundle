@@ -23,7 +23,7 @@ class ms2bundleGroupCreateProcessor extends amObjectCreateProcessor
     //TODO
     private function addTemplates() {
         $data = $this->getProperty('template_ids');
-        if (empty($data)) {
+        if (!$data) {
             return;
         }
         foreach ($data as $item) {

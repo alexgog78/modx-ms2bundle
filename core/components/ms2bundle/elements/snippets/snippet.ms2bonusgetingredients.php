@@ -28,7 +28,7 @@ $productId = $productId ?? $modx->resource->id;
 /** @var ms2bundleGroup $group */
 $bundleGroup = $pdoFetch->getArray('ms2bundleGroup', [
     'id' => $groupId,
-    'active' => 1
+    'is_active' => 1
 ]);
 if (!$bundleGroup) {
     return $modx->lexicon('ms2bundle_err_nf');
@@ -54,7 +54,7 @@ $config = [
     ],
     'where' => [
         $class . '.group_id' => $groupId,
-        $class . '.active' => 1
+        $class . '.is_active' => 1
     ]
 ];
 
@@ -109,8 +109,8 @@ if (!empty($rows) && is_array($rows)) {
         $row['input'] = [
             'name' => 'options[bundle][' . $bundleGroup['id'] . '][]',
             'value' => $row['id'],
-            'checked' => $row['by_default'] ? 'checked' : '',
-            'selected' => $row['by_default'] ? 'selected' : '',
+            'checked' => $row['is_default'] ? 'checked' : '',
+            'selected' => $row['is_default'] ? 'selected' : '',
         ];
         $row['group'] = $bundleGroup;
 

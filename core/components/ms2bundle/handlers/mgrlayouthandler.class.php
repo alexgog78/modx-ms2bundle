@@ -2,6 +2,8 @@
 
 namespace ms2Bundle\Handlers;
 
+use \PDO;
+
 class mgrLayoutHandler extends \abstractModule\Handlers\abstractHandler
 {
     /** @var ms2bundleGroup|null */
@@ -25,16 +27,36 @@ class mgrLayoutHandler extends \abstractModule\Handlers\abstractHandler
      */
     public function getProductLayout($resource)
     {
-        $templateId = $resource->template;
-        $templateGroups = $this->bundleGroupFactory->getTemplateGroupIds($templateId);
-        if (!$templateGroups) {
-            return;
-        }
+        //$templateId = $resource->template;
+        $query = $this->modx->newQuery('ms2bundleGroup');
+        $query->select($this->modx->getSelectColumns(
+            'ms2bundleGroup',
+            'ms2bundleGroup',
+            ''
+        ));
+        $query->where([
+            'is_active' => 1
+        ]);
+        /*if (!empty($tabsIds)) {
+            $query->where([
+                'id:IN' => $tabsIds
+            ]);
+        }*/
+        $query->prepare();
+        $query->stmt->execute();
+        $bundleGroups = $query->stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $this->modx->controller->addLexiconTopic($this->module->package . ':default');
         $configJs = $this->modx->toJSON([
             'record_id' => $resource->id,
-            'bundleGroups' => $templateGroups
+            'bundleGroups' => $bundleGroups ?? []
         ]);
-        $this->modx->controller->addHtml('<script type="text/javascript">' . get_class($this->module) . '.record = ' . $configJs . ';</script>');
+        $this->modx->controller->addHtml(
+            '<script type="text/javascript">' . get_class($this->module) . '.bundle = ' . $configJs . ';</script>'
+        );
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/widgets/product/ingredients.grid.js');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/widgets/product/ingredient.window.js');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/sections/product/product.panel.js');
         $this->modx->controller->addLastJavascript($this->config['jsUrl'] . 'mgr/ms2/product/product.common.js');
     }
 }

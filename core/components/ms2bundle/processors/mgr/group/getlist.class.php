@@ -21,5 +21,49 @@ class ms2bundleGroupGetListProcessor extends amObjectGetListProcessor
         ]);
         return $c;
     }
+
+    /**
+     * @param xPDOObject $object
+     * @return array
+     * TODO templates
+     */
+    /*public function prepareRow(xPDOObject $object) {
+        $objectArray = parent::prepareRow($object);
+
+
+
+        return $objectArray;
+    }*/
+    public function prepareRow(xPDOObject $object) {
+        $objectArray = parent::prepareRow($object);
+        //$objectArray['templates'] = $object->getFieldsArray();
+        return $objectArray;
+    }
+
+    /*private function getTemplates()
+    {
+        $collection = $this->object->getMany('Templates');
+        foreach ($collection as $object) {
+            if ($object->get('template_id') == 0){
+                $template = $this->modx->newObject('modTemplate');
+                $template->fromArray([
+                    'id' => 0,
+                    'templatename' => $this->modx->lexicon('template_empty'),
+                    'description' => '',
+                    'editor_type' => 0,
+                    'icon' => '',
+                    'template_type' => 0,
+                    'content' => '',
+                    'locked' => false,
+                ], '', true);
+            } else {
+                $template = $object->getOne('Template');
+            }
+            $this->templates[] = $template->toArray();
+        }
+        $this->object->set('templates', $this->templates);
+
+        return $this->object;
+    }*/
 }
 return 'ms2bundleGroupGetListProcessor';

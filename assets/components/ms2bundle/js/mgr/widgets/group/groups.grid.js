@@ -3,6 +3,7 @@ ms2Bundle.grid.groups = function (config) {
     if (!config.id) {
         config.id = 'ms2bundle-grid-groups';
     }
+    console.log(config.id);
     Ext.applyIf(config, {
         url: ms2Bundle.config.connectorUrl,
         baseParams: {
@@ -26,16 +27,22 @@ Ext.extend(ms2Bundle.grid.groups, ms2Bundle.grid.abstract, {
         'id',
         'name',
         'description',
-        //'template_id',
+        //'templates',
         'is_active'
     ],
 
     gridColumns: [
         {header: _('id'), dataIndex: 'id', sortable: true, width: 0.05},
-        {header: _('ms2bundle.field.name'), dataIndex: 'name', sortable: true, width: 0.9, editor: {xtype: 'textfield'}},
+        {header: _('ms2bundle.field.name'), dataIndex: 'name', sortable: true, width: 0.9, _editor: {xtype: 'textfield'}},
         //{header: _('ms2bundle.field.template'), dataIndex: 'template_id', sortable: true, width: 0.2},
         {header: _('ms2bundle.field.active'), dataIndex: 'is_active', sortable: true, width: 0.1, editor: {xtype: 'combo-boolean', renderer: 'boolean'}}
     ],
+    /*gridColumns: {
+        'id': {header: _('id'), dataIndex: 'id', sortable: true, width: 0.05},
+        'name': {header: _('ms2bundle.field.name'), dataIndex: 'name', sortable: true, width: 0.9},
+        //{header: _('ms2bundle.field.template'), dataIndex: 'template_id', sortable: true, width: 0.2},
+        'is_active': {header: _('ms2bundle.field.active'), dataIndex: 'is_active', sortable: true, width: 0.1}
+    },*/
 
     removeRecordForm: {
         baseParams: {

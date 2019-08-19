@@ -24,8 +24,13 @@ class ms2Bundle extends abstractModule
         $configJs = $this->modx->toJSON($this->config ?? []);
         $this->modx->controller->addCss($this->config['cssUrl'] . 'mgr/default.css');
         $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/ms2bundle.js');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/combo/group.select.js');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/combo/ingredient.select.js');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/combo/templates.multiselect.js');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/combo/browser.js');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/util/panel.notice.indevelopment.js');
+        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/util/panel.notice.undefined.js');
         $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/misc/renderer.list.js');
-        $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/misc/combo.list.js');
         $this->modx->controller->addJavascript($this->config['jsUrl'] . 'mgr/misc/function.list.js');
         $this->modx->controller->addHtml(
             '<script type="text/javascript">' . get_class($this) . '.config = ' . $configJs . ';</script>'

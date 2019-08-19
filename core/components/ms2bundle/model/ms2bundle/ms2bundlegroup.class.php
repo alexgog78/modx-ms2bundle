@@ -6,6 +6,10 @@ if (!class_exists('amSimpleObject')) {
 
 class ms2bundleGroup extends amSimpleObject
 {
+    const BOOLEAN_FIELDS = [
+        'is_active'
+    ];
+
     const REQUIRED_FIELDS = [
         'name'
     ];
@@ -35,7 +39,7 @@ class ms2bundleGroup extends amSimpleObject
             'Template.group_id = ' . $this->_class . '.id'
         );
         $query->where([[
-            $this->_class . '.active' => 1
+            $this->_class . '.is_active' => 1
         ], [
             'Template.template_id:=' => $templateId,
             'OR:Template.template_id:IS' => null
@@ -60,7 +64,7 @@ class ms2bundleGroup extends amSimpleObject
     {
         $group = $this->xpdo->getObject($this->_class, [
             'id' => $groupId,
-            'active' => 1
+            'is_active' => 1
         ]);
         return $group;
     }

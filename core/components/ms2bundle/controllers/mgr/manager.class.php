@@ -1,10 +1,10 @@
 <?php
 
-if (!class_exists('abstractModuleManagerController')) {
+if (!class_exists('amManagerController')) {
     require_once MODX_CORE_PATH . 'components/abstractmodule/controllers/mgr/manager.class.php';
 }
 
-abstract class ms2BundleManagerController extends abstractModuleManagerController
+abstract class ms2BundleManagerController extends amManagerController
 {
     /**
      * @var array
