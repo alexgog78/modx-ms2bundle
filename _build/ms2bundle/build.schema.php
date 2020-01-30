@@ -1,4 +1,5 @@
 <?php
+
 $tstart = explode(' ', microtime());
 $tstart = $tstart[1] + $tstart[0];
 set_time_limit(0);

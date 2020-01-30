@@ -1,4 +1,5 @@
 <?php
+
 $packageName = 'ms2Bundle';
 $basePath = dirname(dirname(dirname(__FILE__)));
 
