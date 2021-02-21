@@ -1,20 +1,26 @@
 <?php
+
+define('PKG_NAME', 'ms2Bundle');
+define('PKG_NAME_LOWER', strtolower(PKG_NAME));
+
 /** @noinspection PhpIncludeInspection */
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/config.core.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/config.core.php';
 /** @noinspection PhpIncludeInspection */
 require_once MODX_CORE_PATH . 'config/' . MODX_CONFIG_KEY . '.inc.php';
-/** @noinspection PhpIncludeInspection */
+/**
+ * @var modX $modx
+ * @noinspection PhpIncludeInspection
+ */
 require_once MODX_CONNECTORS_PATH . 'index.php';
 
-/** @var modX $modx */
-/** @var ms2Bundle $ms2Bundle */
-$ms2Bundle = $modx->getService('ms2bundle', 'ms2Bundle', $modx->getOption('core_path') . 'components/ms2bundle/model/ms2bundle/', []);
-$modx->lexicon->load('minishop2:default', 'minishop2:manager');
+/** @var ms2Bundle $service */
+$service = $modx->getService(PKG_NAME_LOWER, PKG_NAME, MODX_CORE_PATH . 'components/' . PKG_NAME_LOWER . '/model/');
+$modx->lexicon->load(PKG_NAME_LOWER . ':default');
 
-$path = $modx->getOption('processorsPath', $ms2Bundle->config, MODX_CORE_PATH . 'components/ms2bundle/processors/');
 /** @var modConnectorRequest $request */
 $request = $modx->request;
+$processorsPath = $modx->getOption('processorsPath', $service->getConfig(), MODX_CORE_PATH . 'processors/');
 $request->handleRequest([
-    'processors_path' => $path,
-    'location' => ''
+    'processors_path' => $processorsPath,
+    'location' => '',
 ]);

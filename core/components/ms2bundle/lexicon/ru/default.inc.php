@@ -1,21 +1,9 @@
 <?php
 
-$cultureKey = basename(dirname(__FILE__));
-$baseLexicons = MODX_CORE_PATH . 'components/abstractmodule/lexicon/lexicon.class.php';
-if (file_exists($baseLexicons)) {
-    require_once $baseLexicons;
-    $abstractLexicon = new amLexicon('ms2bundle', $cultureKey);
-    $_abstract_lang = $abstractLexicon->loadLanguageTopics();
-    $_lang = array_merge($_abstract_lang, $_lang ?? []);
-}
+$prefix = 'ms2colors_';
 
-$files = scandir(dirname(__FILE__));
-foreach ($files as $file) {
-    if (strpos($file, '.inc.php')) {
-        @include_once($file);
-    }
-}
+$_lang['ms2colors'] = 'ms2Bundle';
+$_lang[$prefix . 'desc'] = 'Составные товары miniShop2';
 
-//Common
-$_lang['ms2bundle'] = 'ms2Bundle';
-$_lang['ms2bundle.management'] = 'Управление свойствами составных товаров';
+$_lang[$prefix . 'undefined'] = '<span class="icon icon-lock" style="font-size: 200%;"></span><br />Для начала сохраните объект';
+$_lang[$prefix . 'indevelopment'] = '<span class="icon icon-cog" style="font-size: 200%;"></span><br />Раздел находится в разработке';

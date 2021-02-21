@@ -1,21 +1,17 @@
 <?php
 
-$packageName = 'ms2Bundle';
-$basePath = dirname(dirname(dirname(__FILE__)));
+define('PKG_NAME', 'ms2Bundle');
+define('PKG_NAME_LOWER', strtolower(PKG_NAME));
 
-define('PKG_NAME', $packageName);
-define('PKG_NAME_LOWER', mb_strtolower($packageName));
-define('PKG_VERSION', '1.0');
-define('PKG_RELEASE', 'rc1');
+define('PKG_PATH', MODX_CORE_PATH . 'components/' . PKG_NAME_LOWER . '/');
+define('DB_TYPE', 'mysql');
+define('PKG_MODEL_PATH', PKG_PATH . 'model/');
+define('PKG_SCHEMA_PATH', PKG_PATH . 'model/schema/' . PKG_NAME_LOWER . '.' . DB_TYPE . '.schema.xml');
+define('PKG_ELEMENTS_PATH', PKG_PATH . 'elements/');
 
-define('MODX_BASE_PATH', $basePath . '/');
-define('MODX_CORE_PATH', MODX_BASE_PATH . 'core/');
-define('MODX_MANAGER_PATH', MODX_BASE_PATH . 'manager/');
-define('MODX_CONNECTORS_PATH', MODX_BASE_PATH . 'connectors/');
-define('MODX_ASSETS_PATH', MODX_BASE_PATH . 'assets/');
-
-define('MODX_BASE_URL', '/');
-define('MODX_CORE_URL', MODX_BASE_URL . 'core/');
-define('MODX_MANAGER_URL', MODX_BASE_URL . 'manager/');
-define('MODX_CONNECTORS_URL', MODX_BASE_URL . 'connectors/');
-define('MODX_ASSETS_URL', MODX_BASE_URL . 'assets/');
+define('PKG_BUILD_PATH', __DIR__ . '/');
+define('PKG_BUILD_MODEL_PATH', PKG_BUILD_PATH . 'model/');
+define('PKG_BUILD_TRANSPORT_PATH', PKG_BUILD_PATH . 'transport/');
+define('PKG_BUILD_TRANSPORT_DATA_PATH', PKG_BUILD_TRANSPORT_PATH . 'data/');
+define('PKG_BUILD_TRANSPORT_PROPERTIES_PATH', PKG_BUILD_TRANSPORT_PATH . 'properties/');
+define('PKG_BUILD_TRANSPORT_RESOLVERS_PATH', PKG_BUILD_TRANSPORT_PATH . 'resolvers/');

@@ -1,70 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model package="ms2bundle" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM">
-    <object class="ms2bundleGroup" table="ms2bundle_groups" extends="xPDOSimpleObject">
-        <!--Data-->
+<model package="ms2bundle" baseClass="abstractObject" platform="mysql" defaultEngine="InnoDB" tablePrefix="ms2bundle_" phpdoc-package="ms2bundle" phpdoc-subpackage="" version="1.1">
+    <object class="ms2bundleGroup" table="groups" extends="abstractSimpleObject">
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="description" dbtype="varchar" precision="255" phptype="string" null="true"/>
-        <field key="ingredients_min" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true"/>
-        <field key="ingredients_max" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true"/>
-        <field key="is_active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1"/>
+        <field key="properties" dbtype="text" phptype="json" null="true"/>
         <!--Links-->
-        <composite alias="Templates" class="ms2bundleGroupTemplate" local="id" foreign="group_id" cardinality="many" owner="local"/>
-        <composite alias="Ingredients" class="ms2bundleIngredient" local="id" foreign="group_id" cardinality="many" owner="local"/>
+        <composite alias="Categories" class="ms2bundleCategory" local="id" foreign="group_id" cardinality="many" owner="local"/>
+        <aggregate alias="Product" class="msProduct" local="resource_id" foreign="id" cardinality="one" owner="local">
+            <criteria target="foreign"><![CDATA[{"class_key": "msProduct"}]]></criteria>
+        </aggregate>
+        <!--Validation-->
+        <validation>
+            <rule field="name" name="preventBlank" type="xPDOValidationRule" rule="xPDOMinLengthValidationRule" value="1" message="field_required"/>
+        </validation>
     </object>
 
-    <object class="ms2bundleGroupTemplate" table="ms2bundle_group_templates" extends="xPDOObject">
-        <!--Data-->
-        <field key="group_id" dbtype="int" precision="10" phptype="integer" null="false" attributes="unsigned" index="pk" />
-        <field key="template_id" dbtype="int" precision="10" phptype="integer" null="false" attributes="unsigned" index="pk" />
-        <!--Links-->
-        <aggregate alias="Group" class="ms2bundleGroup" local="group_id" foreign="id" cardinality="one" owner="foreign" />
-        <aggregate alias="Template" class="modTemplate" local="template_id" foreign="id" cardinality="one" owner="foreign" />
-        <!--Indexes-->
-        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
-            <column key="group_id" length="" collation="A" null="false" />
-            <column key="template_id" length="" collation="A" null="false" />
-        </index>
-    </object>
-
-    <object class="ms2bundleIngredient" table="ms2bundle_ingredients" extends="xPDOSimpleObject">
-        <!--Data-->
+    <object class="ms2bundleCategory" table="categories" extends="abstractSimpleObject">
         <field key="group_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
-        <field key="description" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="description" dbtype="text" phptype="string" null="true"/>
         <field key="image" dbtype="varchar" precision="255" phptype="string" null="true"/>
-        <field key="price" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
-        <field key="weight" dbtype="decimal" precision="13,3" phptype="float" default="0"/>
-        <field key="is_default" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="0"/>
-        <field key="is_active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1"/>
-        <!--Custom Data-->
-        <!--TODO Replace by plugin-->
-        <field key="proteins" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
-        <field key="fats" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
-        <field key="carbohydrates" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
-        <field key="calories" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
+        <field key="items_count_min" dbtype="int" precision="10" attributes="unsigned" phptype="integer" default="0"/>
+        <field key="items_count_max" dbtype="int" precision="10" attributes="unsigned" phptype="integer" default="0"/>
+        <field key="sort_order" dbtype="int" precision="10" attributes="unsigned" phptype="integer" default="0"/>
+        <field key="is_active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="0"/>
+        <field key="properties" dbtype="text" phptype="json" null="true"/>
         <!--Indexes-->
         <index alias="group_id" name="group_id" primary="false" unique="false" type="BTREE">
             <column key="group_id" length="" collation="A" null="false"/>
         </index>
+        <index alias="sort_order" name="sort_order" primary="false" unique="false" type="BTREE">
+            <column key="sort_order" length="" collation="A" null="false"/>
+        </index>
+        <index alias="is_active" name="is_active" primary="false" unique="false" type="BTREE">
+            <column key="is_active" length="" collation="A" null="false"/>
+        </index>
+        <!--Links-->
+        <composite alias="Items" class="ms2bundleItem" local="id" foreign="category_id" cardinality="many" owner="local"/>
+        <aggregate alias="Group" class="ms2bundleGroup" local="group_id" foreign="id" cardinality="one" owner="local"/>
+        <!--Validation-->
+        <validation>
+            <rule field="name" name="preventBlank" type="xPDOValidationRule" rule="xPDOMinLengthValidationRule" value="1" message="field_required"/>
+            <rule field="group_id" name="checkGroup" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="group_id" alias="Group" class="ms2bundleGroup" message="no_records_found"/>
+        </validation>
+    </object>
+
+    <object class="ms2bundleItem" table="items" extends="abstractSimpleObject">
+        <field key="category_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="description" dbtype="text" phptype="string" null="true"/>
+        <field key="image" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="price" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
+        <field key="weight" dbtype="decimal" precision="13,3" phptype="float" default="0"/>
+        <field key="sort_order" dbtype="int" precision="10" attributes="unsigned" phptype="integer" default="0"/>
+        <field key="is_default" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="0"/>
+        <field key="is_active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="0"/>
+        <field key="properties" dbtype="text" phptype="json" null="true"/>
+        <!--Indexes-->
+        <index alias="category_id" name="category_id" primary="false" unique="false" type="BTREE">
+            <column key="category_id" length="" collation="A" null="false"/>
+        </index>
         <index alias="price" name="price" primary="false" unique="false" type="BTREE">
             <column key="price" length="" collation="A" null="false"/>
         </index>
+        <index alias="sort_order" name="sort_order" primary="false" unique="false" type="BTREE">
+            <column key="sort_order" length="" collation="A" null="false"/>
+        </index>
+        <index alias="is_default" name="is_default" primary="false" unique="false" type="BTREE">
+            <column key="is_default" length="" collation="A" null="false"/>
+        </index>
+        <index alias="is_active" name="is_active" primary="false" unique="false" type="BTREE">
+            <column key="is_active" length="" collation="A" null="false"/>
+        </index>
         <!--Links-->
-        <aggregate alias="Group" class="ms2bundleGroup" local="group_id" foreign="id" cardinality="one" owner="foreign"/>
-        <composite alias="Products" class="ms2bundleProductIngredient" local="id" foreign="ingredient_id" cardinality="many" owner="local"/>
+        <aggregate alias="Category" class="ms2bundleCategory" local="category_id" foreign="id" cardinality="one" owner="foreign"/>
+        <composite alias="ProductIds" class="ms2bundleProductItem" local="id" foreign="item_id" cardinality="many" owner="local"/>
+        <!--Validation-->
+        <validation>
+            <rule field="name" name="preventBlank" type="xPDOValidationRule" rule="xPDOMinLengthValidationRule" value="1" message="field_required"/>
+            <rule field="category_id" name="checkCategory" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="category_id" alias="Category" class="ms2bundleCategory" message="no_records_found"/>
+        </validation>
     </object>
 
-    <object class="ms2bundleProductIngredient" table="ms2bundle_product_ingredients" extends="xPDOObject">
-        <!--Data-->
+    <object class="ms2bundleProductItem" table="product_items" extends="abstractObject">
         <field key="product_id" dbtype="int" precision="10" phptype="integer" null="false" attributes="unsigned" index="pk"/>
-        <field key="ingredient_id" dbtype="int" precision="10" phptype="integer" null="false" attributes="unsigned" index="pk"/>
+        <field key="item_id" dbtype="int" precision="10" phptype="integer" null="false" attributes="unsigned" index="pk"/>
         <!--Indexes-->
         <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
             <column key="product_id" length="" collation="A" null="false"/>
-            <column key="ingredient_id" length="" collation="A" null="false"/>
+            <column key="item_id" length="" collation="A" null="false"/>
         </index>
         <!--Links-->
-        <aggregate alias="Product" class="msProduct" local="product_id" foreign="id" cardinality="one" owner="foreign"/>
-        <aggregate alias="Ingredient" class="ms2bundleIngredient" local="ingredient_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Product" class="msProduct" local="product_id" foreign="id" cardinality="one" owner="local">
+            <criteria target="foreign"><![CDATA[{"class_key": "msProduct"}]]></criteria>
+        </aggregate>
+        <aggregate alias="Item" class="ms2bundleItem" local="item_id" foreign="id" cardinality="one" owner="foreign"/>
+        <!--Validation-->
+        <validation>
+            <rule field="product_id" name="checkProduct" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="product_id" alias="Product" class="msProduct" message="no_records_found"/>
+            <rule field="item_id" name="checkItem" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="item_id" alias="Item" class="ms2bundleItem" message="no_records_found"/>
+        </validation>
+    </object>
+
+    <object class="ms2bundleOrderItem" table="order_items" extends="abstractSimpleObject">
+        <field key="order_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="item_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="price" dbtype="decimal" precision="12,2" phptype="float" default="0"/>
+        <field key="properties" dbtype="text" phptype="json" null="true"/>
+        <!--Indexes-->
+        <index alias="order_id" name="order_id" primary="false" unique="false" type="BTREE">
+            <column key="order_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="item_id" name="item_id" primary="false" unique="false" type="BTREE">
+            <column key="item_id" length="" collation="A" null="false"/>
+        </index>
+        <!--Links-->
+        <aggregate alias="Order" class="msOrder" local="order_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Item" class="ms2bundleItem" local="item_id" foreign="id" cardinality="one" owner="foreign"/>
+        <!--Validation-->
+        <validation>
+            <rule field="order_id" name="checkOrder" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="order_id" alias="Order" class="msOrder" message="no_records_found"/>
+            <rule field="item_id" name="checkItem" type="xPDOValidationRule" rule="xPDOForeignKeyConstraint" foreign="id" local="item_id" alias="Item" class="ms2bundleItem" message="no_records_found"/>
+        </validation>
     </object>
 </model>
